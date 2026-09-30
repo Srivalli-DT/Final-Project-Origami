@@ -37,7 +37,7 @@ GET  /health                     -> {"status":"ok"}
 GET  /api/library                -> [{id,title,category,difficulty:{score,label},thumbnail_svg}]
 GET  /api/library/{id}           -> {id,title,category,description,fold,guide}
 POST /api/detect  (multipart "image") -> {fold, overlay_png_b64, confidence, grid}
-POST /api/guide   {fold}         -> guide
+POST /api/guide   {fold}         -> guide + {fold}   (the normalised FOLD the guide's indices refer to)
 POST /api/narrate {step, mode:"normal"|"simpler"} -> {text, source:"gemini"|"template"}
 POST /api/patterns {title, fold} -> {id}      (saved user uploads)
 GET  /api/patterns               -> [{id,title,created_at}]
