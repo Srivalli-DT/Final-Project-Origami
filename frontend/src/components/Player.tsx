@@ -11,6 +11,8 @@ import {
   type Piece,
 } from "../fold/animate";
 import { narrate } from "../api";
+import { canExportVideo, downloadBlob, recordGuide } from "../fold/export";
+import { useToasts } from "../store";
 
 const HOLD_SECONDS = 0.7;
 
@@ -23,6 +25,8 @@ const KIND_LABEL: Record<string, string> = {
 
 interface Props {
   title: string;
+  /** Used for download filenames. */
+  slug: string;
   description?: string;
   fold: Fold;
   guide: Guide;
@@ -31,7 +35,7 @@ interface Props {
 
 const MemoCP = memo(CPView);
 
-export default function Player({ title, description, fold, guide, actions }: Props) {
+export default function Player({ title, slug, description, fold, guide, actions }: Props) {
   const steps = guide.steps;
   const [idx, setIdx] = useState(0);
   const [t, setT] = useState(0);
@@ -42,6 +46,8 @@ export default function Player({ title, description, fold, guide, actions }: Pro
   const [narration, setNarration] = useState<Narration | null>(null);
   const [readAloud, setReadAloud] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [exporting, setExporting] = useState<number | null>(null);
+  const toast = useToasts((s) => s.push);
 
   const step = steps[idx];
   const collapse = useMemo(() => prepareCollapse(fold, guide), [fold, guide]);
@@ -122,6 +128,31 @@ export default function Player({ title, description, fold, guide, actions }: Pro
     }
   };
 
+  const exportVideo = async () => {
+    if (!canvasRef.current) return;
+    setPlaying(false);
+    setExporting(0);
+    try {
+      const texts = await Promise.all(steps.map((s) => narrate(s, "normal").then((n) => n.text)));
+      const blob = await recordGuide({
+        canvas: canvasRef.current,
+        title,
+        steps,
+        texts,
+        drive: (i, tt) => {
+          setIdx(i);
+          setT(tt);
+        },
+        onProgress: setExporting,
+      });
+      downloadBlob(blob, `${slug}-guide.webm`);
+    } catch (e) {
+      toast(`Video export failed: ${(e as Error).message}`);
+    } finally {
+      setExporting(null);
+    }
+  };
+
   const markDone = () => {
     setDone((d) => new Set(d).add(idx));
     if (idx < steps.length - 1) go(idx + 1);
@@ -186,6 +217,11 @@ export default function Player({ title, description, fold, guide, actions }: Pro
           <h2 className="font-serif text-xl">{step.title}</h2>
         </div>
         <p className="mt-2 text-stone-800">{narration?.text ?? step.text}</p>
+        {exporting !== null && (
+          <p className="mt-2 text-xs text-stone-500">
+            Recording in real time — keep this tab visible until the download starts.
+          </p>
+        )}
         {narration?.source === "gemini" && (
           <p className="mt-1 text-xs text-stone-400">Narration rewritten by Gemini</p>
         )}
@@ -231,6 +267,11 @@ export default function Player({ title, description, fold, guide, actions }: Pro
           <button className="btn" onClick={onStuck} disabled={stuckLoading}>
             {stuckLoading ? "Thinking…" : "I'm stuck"}
           </button>
+          {canExportVideo() && (
+            <button className="btn" onClick={exportVideo} disabled={exporting !== null}>
+              {exporting !== null ? `Recording… ${Math.round(exporting * 100)}%` : "Export video"}
+            </button>
+          )}
           <label className="flex items-center gap-1 text-sm text-stone-600">
             <input type="checkbox" checked={readAloud} onChange={(e) => setReadAloud(e.target.checked)} />
             Read aloud

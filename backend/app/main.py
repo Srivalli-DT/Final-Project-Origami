@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from . import catalog
 from .detect import detect_bytes
 from .guide import make_guide
-from .models import GuideRequest
+from .models import GuideRequest, NarrateRequest
+from .narrate import narrate
 
 
 
@@ -68,3 +69,8 @@ async def post_detect(image: UploadFile = File(...)):
         return detect_bytes(data)
     except ValueError as e:
         raise HTTPException(400, str(e)) from e
+
+
+@app.post("/api/narrate")
+def post_narrate(req: NarrateRequest):
+    return narrate(req.step, req.mode)

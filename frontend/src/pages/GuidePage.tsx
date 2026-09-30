@@ -17,6 +17,7 @@ export default function GuidePage() {
   return (
     <Player
       title={title}
+      slug="my-pattern"
       fold={fold}
       guide={guide}
       actions={<GuideActions title={title} slug="my-pattern" fold={fold} guide={guide} canSave />}

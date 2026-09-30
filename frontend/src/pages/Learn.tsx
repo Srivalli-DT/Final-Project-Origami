@@ -31,6 +31,7 @@ export default function Learn() {
   return (
     <Player
       title={model.title}
+      slug={model.id}
       description={model.description}
       fold={model.fold}
       guide={model.guide}
