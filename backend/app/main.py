@@ -4,10 +4,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import catalog
+from . import catalog, db
 from .detect import detect_bytes
 from .guide import make_guide
-from .models import GuideRequest, NarrateRequest
+from .models import GuideRequest, NarrateRequest, PatternCreate
 from .narrate import narrate
 
 
@@ -15,6 +15,7 @@ from .narrate import narrate
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     catalog.warm()  # precompute library guides
+    db.get_engine()  # create tables
     yield
 
 
@@ -74,3 +75,22 @@ async def post_detect(image: UploadFile = File(...)):
 @app.post("/api/narrate")
 def post_narrate(req: NarrateRequest):
     return narrate(req.step, req.mode)
+
+
+@app.post("/api/patterns")
+def post_pattern(req: PatternCreate):
+    fold = catalog.normalize_fold(req.fold.model_dump())
+    return {"id": db.create_pattern(req.title.strip(), fold)}
+
+
+@app.get("/api/patterns")
+def get_patterns():
+    return db.list_patterns()
+
+
+@app.get("/api/patterns/{pattern_id}")
+def get_pattern(pattern_id: int):
+    p = db.get_pattern(pattern_id)
+    if p is None:
+        raise HTTPException(404, "pattern not found")
+    return {**p, "guide": make_guide(p["fold"])}

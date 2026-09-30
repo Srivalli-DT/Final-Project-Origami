@@ -4,6 +4,8 @@ import Hub from "./pages/Hub";
 import Learn from "./pages/Learn";
 import GuidePage from "./pages/GuidePage";
 import Upload from "./pages/Upload";
+import PatternPage from "./pages/PatternPage";
+import About from "./pages/About";
 
 export default function App() {
   return (
@@ -13,6 +15,8 @@ export default function App() {
         <Route path="/learn/:id" element={<Learn />} />
         <Route path="/guide" element={<GuidePage />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/patterns/:id" element={<PatternPage />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<main className="p-8">Page not found.</main>} />
       </Route>
     </Routes>
