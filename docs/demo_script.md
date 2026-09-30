@@ -1,7 +1,7 @@
 # CreaseLens — 3-minute demo script
 
-**Before you start (2 minutes early):** open the Render API URL (`/health`) so the free server wakes up.
-Then open the Vercel site. Have `frontend/public/samples/preliminary-error.png` ready, and Origami
+**Before you start (2 minutes early):** open `<your-site>.vercel.app/health` so the backend function is warm.
+Then open the site. Have `frontend/public/samples/preliminary-error.png` ready, and Origami
 Simulator (https://origamisimulator.org) open in another tab.
 
 ## 1. The Hub (0:00–0:25)

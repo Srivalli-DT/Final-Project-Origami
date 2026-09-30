@@ -18,7 +18,10 @@ class Pattern(SQLModel, table=True):
 
 
 def _url() -> str:
-    url = os.getenv("DATABASE_URL") or "sqlite:///./creaselens.db"
+    url = os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
+    if not url:
+        # Vercel's filesystem is read-only except /tmp (and /tmp does not persist)
+        url = "sqlite:////tmp/creaselens.db" if os.getenv("VERCEL") else "sqlite:///./creaselens.db"
     if url.startswith("postgres://"):  # Neon/Heroku style
         url = "postgresql://" + url[len("postgres://"):]
     return url

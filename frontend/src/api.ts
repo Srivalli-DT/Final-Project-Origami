@@ -12,13 +12,15 @@ import type {
 import { useServer } from "./store";
 import mockLibrary from "./mock/library.json";
 
-const BASE = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") || "";
+// VITE_API_URL: unset → built-in mocks; "/" → same origin (Vercel, Vite proxy); otherwise a full URL.
+const RAW = (import.meta.env.VITE_API_URL as string | undefined)?.trim() ?? "";
+const BASE = RAW.replace(/\/$/, "");
 
-export const usingMocks = !BASE;
+export const usingMocks = RAW === "";
 
 const mockModels = import.meta.glob("./mock/model-*.json", { import: "default" });
 
-/** Fetch with a "waking up server…" signal for Render cold starts. */
+/** Fetch with a "waking up server…" signal for serverless cold starts. */
 async function request<T>(path: string, init?: RequestInit, timeoutMs = 90000): Promise<T> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);

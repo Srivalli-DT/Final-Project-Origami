@@ -19,9 +19,10 @@ The full build plan is in `docs/PLAN.md`. Only do the phase you are asked to do,
   - venv in `backend/.venv`
 - `/frontend`:
   - React 18, Vite, TypeScript, Tailwind, react-router-dom, zustand, three, @react-three/fiber, @react-three/drei
-- Hosting:
-  - Backend on Render (free web service, `render.yaml`)
-  - Frontend on Vercel (root dir `frontend`, SPA rewrite in `vercel.json`)
+- Hosting (free, one Vercel project):
+  - Frontend: static build of `frontend/` (`vercel.json` at the repo root)
+  - Backend: FastAPI as a Python serverless function, `api/index.py`, deps in root `requirements.txt`
+  - `/api/*` and `/health` are same-origin; the frontend uses `VITE_API_URL=/`
 
 ## Data format
 Use FOLD JSON with coordinates in the unit square [0,1]².

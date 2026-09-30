@@ -80,12 +80,18 @@ export default function Upload() {
   };
 
   // ---- inputs
-  const runDetect = async (blob: Blob) => {
-    if (blob.size > 5 * 1024 * 1024) {
-      toast("That image is larger than 5MB.");
+  const runDetect = async (original: Blob) => {
+    if (original.size > 15 * 1024 * 1024) {
+      toast("That image is too large (over 15MB).");
       return;
     }
     setBusy("Detecting creases…");
+    const blob = await shrinkImage(original);
+    if (blob.size > 4 * 1024 * 1024) {
+      setBusy(null);
+      toast("That image is still over 4MB after resizing; try a smaller screenshot.");
+      return;
+    }
     setResult(null);
     setGuide(null);
     setFold(null);
@@ -206,7 +212,7 @@ export default function Upload() {
         }`}
       >
         <div className="text-lg font-medium">Drop a screenshot or .fold file here</div>
-        <div className="text-sm text-stone-500">or click to choose (PNG / JPG up to 5MB)</div>
+        <div className="text-sm text-stone-500">or click to choose (PNG / JPG; large images are resized first)</div>
         <input
           ref={fileInput}
           type="file"
@@ -304,7 +310,7 @@ export default function Upload() {
                 <span className="font-medium text-emerald-700">✓ Every vertex passes Maekawa and Kawasaki</span>
               ) : guide ? (
                 <span className="font-medium text-rose-700">
-                  {failing.length} vertex{failing.length === 1 ? "" : "es"} fail local flat-foldability
+                  {failing.length} {failing.length === 1 ? "vertex fails" : "vertices fail"} local flat-foldability
                 </span>
               ) : null}
               <input
@@ -348,6 +354,31 @@ export default function Upload() {
       )}
     </main>
   );
+}
+
+const MAX_SIDE = 1600;
+
+/**
+ * Downscale big images in the browser (detection works at 1200px anyway) so uploads
+ * stay under the hosting request limit. Small images are sent unchanged.
+ */
+async function shrinkImage(blob: Blob): Promise<Blob> {
+  let bmp: ImageBitmap;
+  try {
+    bmp = await createImageBitmap(blob);
+  } catch {
+    return blob; // let the server report the decode error
+  }
+  const scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
+  if (scale === 1 && blob.size < 3 * 1024 * 1024) return blob;
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(bmp.width * scale);
+  canvas.height = Math.round(bmp.height * scale);
+  canvas.getContext("2d")!.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+  const toBlob = (type: string, q?: number) =>
+    new Promise<Blob>((res, rej) => canvas.toBlob((b) => (b ? res(b) : rej(new Error("encode failed"))), type, q));
+  const png = await toBlob("image/png");
+  return png.size < 3 * 1024 * 1024 ? png : toBlob("image/jpeg", 0.92);
 }
 
 /** Scale arbitrary FOLD coordinates into the unit square (y up). */

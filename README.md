@@ -39,12 +39,12 @@ CreaseLens combines image detection, local flat-foldability checks, a step-order
 
 ```mermaid
 flowchart LR
-  subgraph Browser["Frontend — React + Vite (Vercel)"]
+  subgraph Browser["Frontend — React + Vite (Vercel static)"]
     Hub[Learn Hub] --> Player
     Upload[Upload + CP editor] --> Player[Guided player<br/>2D CP · 3D three.js · narration]
     Player --> Export[.fold · steps SVG · webm]
   end
-  subgraph API["Backend — FastAPI (Render)"]
+  subgraph API["Backend — FastAPI (Vercel Python function)"]
     Detect["/api/detect<br/>detect.py (OpenCV)"]
     Guide["/api/guide<br/>fold_utils · validate · guide"]
     Lib["/api/library<br/>library.py (precomputed)"]
@@ -136,12 +136,18 @@ validity drops quickly on hard images.
 
 ## Run locally
 
-Requirements: Python 3.11+, Node 20+.
+Requirements: Python 3.11+ and Node 20+.
+
+**Windows, one click:** double-click `start-local.bat`. The first run creates the Python environment
+and installs packages (a few minutes); then it opens http://localhost:5173. Close the two server
+windows to stop.
+
+**Manually:**
 
 ```bash
 cd backend
 python -m venv .venv
-.venv/Scripts/python -m pip install -r requirements.txt   # on macOS/Linux: .venv/bin/python
+.venv/Scripts/python -m pip install -r requirements.txt   # macOS/Linux: .venv/bin/python
 .venv/Scripts/python -m pytest -q
 .venv/Scripts/python -m uvicorn app.main:app --port 8000
 ```
@@ -149,12 +155,13 @@ python -m venv .venv
 ```bash
 cd frontend
 npm install
-echo VITE_API_URL=http://localhost:8000 > .env.local
+echo VITE_API_URL=/ > .env.local
 npm run dev
 ```
 
-Without `VITE_API_URL` the frontend runs on the built-in mocks in `frontend/src/mock/` (Hub and
-player only). Useful scripts:
+With `VITE_API_URL=/` the Vite dev server proxies `/api` and `/health` to the backend on port 8000,
+the same same-origin setup used on Vercel. Without `VITE_API_URL` the frontend runs on the built-in
+mocks in `frontend/src/mock/` (Hub and player only). Useful scripts (run in `backend/`):
 
 - `python -m app.eval` — detection evaluation, writes `docs/eval_results.md`
 - `python -m scripts.export_mocks` — refresh the frontend mocks from the real API
@@ -166,19 +173,27 @@ player only). Useful scripts:
 |---|---|---|
 | `GEMINI_API_KEY` | backend | unset → template narration |
 | `GEMINI_MODEL` | backend | `gemini-2.5-flash` |
-| `FRONTEND_URL` | backend (CORS, comma-separated) | — (`http://localhost:5173` is always allowed) |
-| `DATABASE_URL` | backend | `sqlite:///./creaselens.db` |
-| `VITE_API_URL` | frontend | unset → mocks |
+| `DATABASE_URL` | backend | local `sqlite:///./creaselens.db`; on Vercel a temporary SQLite in `/tmp` |
+| `FRONTEND_URL` | backend (CORS, comma-separated) | only needed if the frontend is on another domain |
+| `VITE_API_URL` | frontend | unset → mocks; `/` → same origin |
 
-## Deploy
+## Deploy (free, everything on Vercel)
 
-- **Backend (Render):** New → Blueprint → select this repo (`render.yaml`, root `backend`). Set
-  `GEMINI_API_KEY`, `FRONTEND_URL=<vercel url>` and optionally `DATABASE_URL` (Render's free disk is
-  wiped on redeploy, so use Neon Postgres for saved patterns).
-- **Frontend (Vercel):** import the repo, root directory `frontend`, env `VITE_API_URL=<render url>`,
-  then redeploy. `vercel.json` rewrites every route to the SPA.
-- The Render free tier sleeps when idle; the app shows "Waking up the server…" during the 30–60s cold
-  start. Open the API URL a couple of minutes before a demo.
+One Vercel project serves both parts: the React build as static files and the FastAPI app as a
+Python serverless function (`api/index.py`, dependencies in the root `requirements.txt`).
+`vercel.json` routes `/api/*` and `/health` to the function and every other path to the SPA.
+
+1. Push this repo to GitHub.
+2. On vercel.com: **Add New → Project → Import** the repo. Leave the root directory as the repo root;
+   the build settings come from `vercel.json`. Deploy.
+3. **Settings → Environment Variables:** add `GEMINI_API_KEY` (optional, for Gemini narration), then
+   redeploy.
+4. **Saved patterns:** Vercel's disk is temporary, so without a database saved patterns disappear.
+   Under **Storage → Create → Neon (Postgres)**, connect it to the project; it sets `DATABASE_URL`
+   automatically. Redeploy.
+
+Notes: requests are limited to 4.5MB, so the upload page resizes large images in the browser first.
+The first request after the function has been idle takes a few seconds while OpenCV loads.
 
 ## References
 

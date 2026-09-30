@@ -1,0 +1,10 @@
+# Runtime dependencies for the Vercel Python function (api/index.py).
+# Local development and tests use backend/requirements.txt.
+fastapi>=0.110,<1
+numpy>=1.26,<3
+opencv-python-headless>=4.9,<5
+pydantic>=2.6,<3
+sqlmodel>=0.0.16,<0.1
+google-genai>=1.0,<2
+python-multipart>=0.0.9,<1
+psycopg2-binary>=2.9,<3
