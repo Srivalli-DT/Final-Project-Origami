@@ -1,10 +1,11 @@
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import catalog
+from .detect import detect_bytes
 from .guide import make_guide
 from .models import GuideRequest
 
@@ -17,6 +18,8 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="CreaseLens API", lifespan=lifespan)
+
+MAX_UPLOAD = 5 * 1024 * 1024
 
 _origins = ["http://localhost:5173"]
 if os.getenv("FRONTEND_URL"):
@@ -54,3 +57,14 @@ def post_guide(req: GuideRequest):
     guide = make_guide(fold)
     guide["fold"] = fold
     return guide
+
+
+@app.post("/api/detect")
+async def post_detect(image: UploadFile = File(...)):
+    data = await image.read(MAX_UPLOAD + 1)
+    if len(data) > MAX_UPLOAD:
+        raise HTTPException(413, "image is larger than 5MB")
+    try:
+        return detect_bytes(data)
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
