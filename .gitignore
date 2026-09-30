@@ -7,3 +7,4 @@ __pycache__/
 .pytest_cache/
 backend/data/synth/
 frontend/tsconfig.tsbuildinfo
+*.local
