@@ -234,7 +234,8 @@ def face_tree(fold: dict) -> dict:
     return {"root": root, "nodes": [nodes[f] for f in order]}
 
 
-def folded_coordinates(fold: dict, tree: dict) -> list[list[float]]:
+def face_transforms(fold: dict, tree: dict) -> dict[int, list[list[float]]]:
+    """2x3 affine map (CP -> flat-folded) for every face, composed along the face tree."""
     coords = fold["vertices_coords"]
     mats: dict[int, list] = {}
     for node in tree["nodes"]:
@@ -244,6 +245,12 @@ def folded_coordinates(fold: dict, tree: dict) -> list[list[float]]:
             continue
         a, b = fold["edges_vertices"][node["hinge_edge"]]
         mats[node["face"]] = _compose(mats[node["parent"]], _reflection(coords[a], coords[b]))
+    return mats
+
+
+def folded_coordinates(fold: dict, tree: dict) -> list[list[float]]:
+    coords = fold["vertices_coords"]
+    mats = face_transforms(fold, tree)
     out: list[list[float] | None] = [None] * len(coords)
     for node in tree["nodes"]:
         for v in fold["faces_vertices"][node["face"]]:

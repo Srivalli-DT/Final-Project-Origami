@@ -8,3 +8,4 @@ __pycache__/
 backend/data/synth/
 frontend/tsconfig.tsbuildinfo
 *.local
+backend/.renders/
