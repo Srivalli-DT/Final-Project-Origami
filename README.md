@@ -1,9 +1,9 @@
 # CreaseLens
 
-An origami learning platform with a real fold engine, in two parts: **Tutorials**, step-by-step lessons
-where every fold is simulated, and the **Studio**, where you design your own crease patterns with live
-rule checks and a physics preview. The rules of flat folding (and their exceptions) are explained from
-the Studio's rule panel.
+An origami learning platform with a real fold engine, in three parts: **Tutorials**, step-by-step lessons
+where every fold is simulated; the **Studio**, where you design your own crease patterns with live rule
+checks and a physics preview; and **Rules**, the rules of flat folding and their exceptions (also linked
+from the Studio's rule panel).
 
 Live: https://final-project-origami.vercel.app
 
@@ -33,7 +33,7 @@ engine relies on.
   3D and vice versa. Prev / play / next, step dots, fold-progress scrub, 0.5×/1×/2× speed, replay, tips and
   common mistakes behind one "i" toggle, ✓ Done, "Ask" and "I'm stuck" (Gemini with a template fallback),
   and "Open in Studio".
-- **Rules (from the Studio):** Maekawa, Kawasaki, even degree, big-little-big, two-colourability, no self-intersection,
+- **Rules:** Maekawa, Kawasaki, even degree, big-little-big, two-colourability, no self-intersection,
   Huzita–Justin axioms, diagram symbols and paper rules, each with exceptions (kirigami, modular,
   wet-folding/curved creases, 3D shaping, rectangles, tessellations, action models) and demo patterns that
   open in the Studio.
@@ -53,6 +53,7 @@ flowchart LR
   subgraph Browser["Frontend: React + Vite + three.js (Vercel static)"]
     Tutorials --> Player
     Player -->|Open in Studio| Studio
+    Rules -->|demo| Studio
     Studio -->|rule info| Rules
     Studio --> Solver["sim/solver.ts<br/>bar-and-hinge"]
   end

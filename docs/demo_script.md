@@ -15,8 +15,8 @@ warm.
 - Open **i** for tips and common mistakes, then ask "which way does the petal go?" or press **I'm stuck**.
 - Step to the end: wings, neck, tail and head.
 
-## 3. Studio rules → exception (1:20–1:50)
-- In the Studio, open the ⓘ next to **Kawasaki**: the statement, why it holds, and its exceptions.
+## 3. Rules → exception (1:20–1:50)
+- **Rules** tab → **Kawasaki**: the statement, why it holds, and its exceptions.
 - **Open in Studio** loads the demo vertex.
 
 ## 4. Studio (1:50–2:40)

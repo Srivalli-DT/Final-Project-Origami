@@ -1,13 +1,14 @@
 # CreaseLens: project rules for Claude Code (v2, tutorial-first)
 
-CreaseLens is an origami learning platform with a dark "studio" UI. The user narrowed it to two areas
+CreaseLens is an origami learning platform with a dark "studio" UI. The user narrowed it to three areas
 (the Folding School, levels/XP and profile pages were removed from the UI):
 1. **Tutorials**: a library of step-by-step tutorials across many categories, filterable by difficulty
    level. Each step is simulated by a real fold engine and animated in 3D, with tips, common mistakes and
    diagram symbols.
 2. **Studio**: draw your own crease pattern with live rule checks (exceptions toggles), a 3D fold preview,
-   and saved patterns. Each rule links to its **Rules** page (Maekawa, Kawasaki, big-little-big,
-   two-colourability, Huzita–Justin axioms, diagram conventions, and exceptions).
+   and saved patterns. Each rule check links to its Rules page.
+3. **Rules**: the fundamental rules (Maekawa, Kawasaki, big-little-big, two-colourability, Huzita–Justin
+   axioms, diagram conventions) and their exceptions, with demos that open in the Studio.
 
 The build plan is in `docs/PLAN.md` (v2). Only do the phase you are asked for, run its checks, commit, then stop and summarise.
 

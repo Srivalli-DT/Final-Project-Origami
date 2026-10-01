@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router-dom";
-import { Keyboard, LibraryBig, PenTool, Search, X } from "lucide-react";
+import { BookOpenCheck, Keyboard, LibraryBig, PenTool, Search, X } from "lucide-react";
 import { api, usingMocks } from "../api";
 import { useServer, useToasts, useUser } from "../store";
 import { useKeys } from "../hooks/useKeys";
@@ -8,6 +8,7 @@ import { useKeys } from "../hooks/useKeys";
 const NAV = [
   { to: "/", label: "Tutorials", icon: LibraryBig, end: true },
   { to: "/studio", label: "Studio", icon: PenTool, end: false },
+  { to: "/rules", label: "Rules", icon: BookOpenCheck, end: false },
 ];
 
 export const SHORTCUTS: [string, string][] = [
