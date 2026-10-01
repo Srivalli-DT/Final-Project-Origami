@@ -1,70 +1,108 @@
-# CreaseLens — project rules for Claude Code
+# CreaseLens: project rules for Claude Code (v2, tutorial-first)
 
-CreaseLens teaches people to fold origami from crease patterns (CPs).
-- A Learn Hub has categories (Bases, Tessellations, Modular) with built-in guided models.
-- Users can upload a screenshot of a CP. It is detected, validated and turned into a step-by-step guided fold: a sequenced crease pattern, a 3D animation and narration.
+CreaseLens is an origami learning platform with a dark "studio" UI. It has five areas:
+1. **Folding School**: a levelled learning path (Levels 1–5), from basic folds up to advanced models.
+2. **Library**: a database of step-by-step tutorials across many categories. Each step is simulated by a real fold engine and animated in 3D, with tips, common mistakes and diagram symbols.
+3. **Rules**: the fundamental rules of origami (Maekawa, Kawasaki, big-little-big, two-colourability, Huzita–Justin axioms, diagram conventions) and their exceptions (kirigami, modular, wet-folding/curved, 3D shaping, rectangles, tessellations).
+4. **Studio**: draw your own crease pattern with live rule checks (exceptions toggles) and a 3D fold preview.
+5. **Progress**: per-user completed steps and tutorials, XP, and level unlocks.
 
-The full build plan is in `docs/PLAN.md`. Only do the phase you are asked to do, then stop and report.
+The build plan is in `docs/PLAN.md` (v2). Only do the phase you are asked for, run its checks, commit, then stop and summarise.
 
-## Machine constraints (important)
-- The laptop has an i5, 8GB RAM and basic graphics. No Docker. No local ML training. No heavy deps.
-- Use `opencv-python-headless`, never `opencv-python`.
-- Keep at most one backend dev server and one frontend dev server running. Prefer running tests over starting servers.
-- Do not leave long-running processes running when a phase ends.
+## Machine constraints
+- i5, 8GB RAM, basic GPU. No Docker. No ML training.
+- Use `opencv-python-headless` only if needed.
+- At most one backend and one frontend dev server. Prefer tests over servers. Leave no long-running processes behind.
 
 ## Stack
 - `/backend`:
-  - Python 3.11, FastAPI, uvicorn, numpy, opencv-python-headless, networkx, pydantic v2, sqlmodel, google-genai, pytest
-  - Layout: `backend/app/` (modules) and `backend/tests/`
-  - venv in `backend/.venv`
+  - Python 3.11, FastAPI, numpy, pydantic v2, sqlmodel, pyyaml, shapely (polygon clipping), networkx, google-genai, pytest
+  - Matplotlib only for dev renders.
 - `/frontend`:
-  - React 18, Vite, TypeScript, Tailwind, react-router-dom, zustand, three, @react-three/fiber, @react-three/drei
-- Hosting (free, one Vercel project):
-  - Frontend: static build of `frontend/` (`vercel.json` at the repo root)
-  - Backend: FastAPI as a Python serverless function, `api/index.py`, deps in root `requirements.txt`
-  - `/api/*` and `/health` are same-origin; the frontend uses `VITE_API_URL=/`
+  - React 18, Vite, TS, Tailwind, react-router-dom, zustand, three, @react-three/fiber, @react-three/drei, lucide-react
+- Database:
+  - SQLModel with SQLite locally, Neon Postgres in production (`DATABASE_URL`).
+  - Seeded from `backend/content/` YAML at startup (idempotent upsert).
+- Hosting: one free Vercel project (chosen over Render). The frontend is a static build of `frontend/`; the
+  backend runs as a Python function (`api/index.py`, deps in the root `requirements.txt`). `/api/*` and
+  `/health` are same-origin, so the frontend uses `VITE_API_URL=/`. Use Neon Postgres for `DATABASE_URL`.
 
-## Data format
-Use FOLD JSON with coordinates in the unit square [0,1]².
-- Keys: `vertices_coords`, `edges_vertices`, `edges_assignment` ("M" mountain, "V" valley, "B" boundary, "F" flat/reference), `faces_vertices`.
-- Conventions:
-  - Valley = the paper rotates toward the viewer (+z).
-  - Mountain = the paper rotates away from the viewer (−z).
-- Geometric tolerance: `EPS = 1e-6` for math; `SNAP = 1e-3` for merging detected vertices.
+## Reuse from v1 (do not rewrite unless broken)
+- `app/fold_utils.py`: building a planar graph and faces, `fold_to_svg`.
+- `app/validate.py`: Maekawa and Kawasaki.
+- `app/guide.py`: face tree, `folded_coords` and difficulty. Used by the Studio.
+- `frontend/src/fold/animate.ts`: hinge animation. Used by the Studio preview.
+- Old Hub and Player pages: replace them.
 
-## API contract (frontend and backend both code against this; do not change without updating both)
-```
-GET  /health                     -> {"status":"ok"}
-GET  /api/library                -> [{id,title,category,difficulty:{score,label},thumbnail_svg}]
-GET  /api/library/{id}           -> {id,title,category,description,fold,guide}
-POST /api/detect  (multipart "image") -> {fold, overlay_png_b64, confidence, grid}
-POST /api/guide   {fold}         -> guide + {fold}   (the normalised FOLD the guide's indices refer to)
-POST /api/narrate {step, mode:"normal"|"simpler"} -> {text, source:"gemini"|"template"}
-POST /api/patterns {title, fold} -> {id}      (saved user uploads)
-GET  /api/patterns               -> [{id,title,created_at}]
-GET  /api/patterns/{id}          -> {id,title,fold,guide}
-```
-`category` is one of "bases" | "tessellations" | "modular".
+## Design system (dark studio)
+- **Colours:**
+  - bg `#0e1014`, panel `#161920`, panel-2 `#1d212b`, border `#2a2f3a`
+  - text `#e7e9ee`, muted `#8a92a6`
+  - accent (paper amber) `#f5b14c`
+  - mountain `#ff5d5d`, valley `#4da3ff`, flat/reference `#6b7280`
+  - success `#3ccf91`, warning `#f5b14c`, error `#ff5d5d`
+- **3D paper:** front (coloured side) `#e2553f`, back `#f3e6cc`. Grid background in the 3D view.
+- **Fonts:** Inter (UI) and JetBrains Mono (numbers, code, coordinates).
+- **Layout:** a canvas-first, tool-like layout with a left nav rail, a central canvas and right inspector panels (Figma/Blender feel). Rounded-lg corners, 1px borders, no heavy shadows. Fully usable at 1280px; acceptable on mobile.
+- **Diagram line convention (Yoshizawa–Randlett):** valley = dashed; mountain = dash-dot.
 
-The `guide` object:
+## Minimal wording (strict)
+- Icons with tooltips instead of labels wherever the meaning is clear (lucide icons).
+- Step instructions: one line, at most 12 words. Tips and mistakes are hidden behind one "i" toggle.
+- No marketing copy and no paragraphs in the UI. Headings at most 3 words.
+- Longer explanations live only on Rules pages, inside collapsible sections.
+
+## Accessibility (required, WCAG 2.2 AA)
+- Text contrast ≥ 4.5:1 and UI contrast ≥ 3:1 (the palette above passes; don't add lower-contrast greys).
+- Never use colour alone:
+  - mountain/valley also differ by line dash and by an "M"/"V" label on hover/focus
+  - strain heatmap has a legend and a colour-blind-safe ramp option (viridis)
+- Every icon button has `aria-label` and a visible focus ring (2px accent outline).
+- Full keyboard use:
+  - ←/→ = previous/next step
+  - Space = play/pause
+  - [ / ] = fold % −/+ 5
+  - Studio tools on number keys
+  - a "?" overlay lists the shortcuts
+- `aria-live="polite"` region announces the current step's instruction.
+- Respect `prefers-reduced-motion`: no auto-play, instant step transitions, sliders still work.
+- Base font size 15px, hit targets ≥ 36px, semantic landmarks (nav/main/aside), skip-to-content link.
+- 3D canvases have an `aria-label` describing the current state ("Step 4 of 12: valley fold, paper is a triangle").
+
+## Data formats
+- Crease patterns: FOLD JSON (`vertices_coords`, `edges_vertices`, `edges_assignment` M/V/F/B, `faces_vertices`). Paper coordinates are the unit square, or 1×h for rectangles.
+- Tutorials: YAML in `backend/content/tutorials/*.yaml` (schema in PLAN Phase 2), compiled by the fold engine into keyframes.
+- Rules: YAML in `backend/content/rules.yaml`.
+
+## API contract (both sides code against this)
 ```
-{
-  validation: {ok: bool, vertices: [{vertex, ok, maekawa_ok, kawasaki_ok, reasons: [str]}]},
-  difficulty: {score: 0-100, label: "Beginner"|"Intermediate"|"Advanced"},
-  faces: [[vertex indices]],          // same as fold.faces_vertices
-  face_tree: {root: int, nodes: [{face, parent, hinge_edge, sign}]},   // sign: +1 valley, -1 mountain; root has parent -1
-  folded_coords: [[x,y]],            // flat-folded 2D position of every vertex (fallback animation)
-  steps: [{index, title, kind: "reference"|"precrease"|"collapse"|"assembly",
-           line: [[x1,y1],[x2,y2]] | null,   // for single-line steps
-           assignment: "M"|"V"|null,
-           edges: [int], cumulative_edges: [int], text}]
-}
+GET  /health
+GET  /api/categories                    -> [{id,title,description,icon,count}]
+GET  /api/tutorials?category=&level=&q= -> [{id,title,category,level,minutes,paper,thumbnail_svg,tags}]
+GET  /api/tutorials/{id}                -> {meta..., steps:[CompiledStep], final_svg}
+GET  /api/levels                        -> [{level,title,description,tutorial_ids}]
+GET  /api/rules                         -> [{id,title,statement,why,example,exceptions:[{title,text}],demo_fold?}]
+POST /api/studio/check  {fold, exceptions:{...}}  -> {ok, checks:[{rule_id,ok,vertices:[...],message}]}
+POST /api/studio/preview {fold}         -> {face_tree, folded_coords, faces, difficulty}
+POST /api/patterns {title,fold,user_id} -> {id};  GET /api/patterns?user_id=
+POST /api/users {name} -> {user_id};  GET/POST /api/progress (user_id, tutorial_id, step_index, completed)
+POST /api/ask {tutorial_id, step_index, question?} -> {text, source:"gemini"|"template"}
 ```
 
-## Code rules
-- Geometry and algorithms are pure functions in their own modules. API routes stay thin.
-- Every backend module gets pytest tests. Run `pytest -q` before saying a phase is done.
-- Every library model must pass validation in tests.
-- No secrets in git. Use env vars: `GEMINI_API_KEY`, `GEMINI_MODEL` (default `gemini-2.5-flash`), `FRONTEND_URL`, `DATABASE_URL` (default `sqlite:///./creaselens.db`), `VITE_API_URL`.
-- The frontend must work against `frontend/src/mock/*.json` when `VITE_API_URL` is unset.
-- Commit at the end of every phase with the message `phase N: <summary>`.
+CompiledStep:
+```
+{index, title, op, instruction, tips:[str], mistakes:[str], symbol, check,
+ axis:{p:[x,y], d:[x,y]} | null, direction: 1 | -1 | 0,
+ pieces_before:[{id, poly:[[x,y]], layer, face_up, moving}],   // folded coords, split, before motion
+ state_after:[{id, poly, layer, face_up}],
+ creases_so_far:[{a:[x,y], b:[x,y], assignment}],              // paper coords: the sequenced crease pattern
+ is_shaping: bool}   // 3D/non-flat final shaping: illustrated and explained, not simulated
+```
+
+## Rules for code
+- Pure functions for geometry and the engine. API routes stay thin.
+- pytest for every backend module. `pytest -q` must pass before a phase is done.
+- **Every tutorial YAML must compile without errors in tests.** The compiler also renders PNG previews to `backend/.renders/` (gitignored). When authoring tutorials, **look at the rendered final-state PNG and fix the tutorial if it doesn't resemble the model.**
+- Env vars: `GEMINI_API_KEY`, `GEMINI_MODEL` (default `gemini-2.5-flash`), `FRONTEND_URL`, `DATABASE_URL`, `VITE_API_URL`.
+- The frontend uses `frontend/src/mock/*.json` when the API is unreachable.
+- Commit at the end of each phase: `v2 phase N: <summary>`.

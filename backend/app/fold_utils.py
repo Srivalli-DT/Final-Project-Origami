@@ -387,3 +387,14 @@ def fold_to_svg(fold: dict, highlight_edges: Iterable[int] | None = None, size: 
         )
     parts.append("</svg>")
     return "".join(parts)
+
+
+def normalize_fold(fold: dict) -> dict:
+    """Rebuild a (possibly hand-edited) FOLD so it is split, merged and has faces."""
+    coords = fold["vertices_coords"]
+    segs = [
+        (coords[a], coords[b], asg)
+        for (a, b), asg in zip(fold["edges_vertices"], fold["edges_assignment"])
+        if asg != "B"
+    ]
+    return build_fold(segs)

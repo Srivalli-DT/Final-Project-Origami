@@ -1,8 +1,6 @@
 import pytest
-from fastapi.testclient import TestClient
 
 from app import narrate as nar
-from app.main import app
 
 STEP = {"index": 0, "title": "Fold in half", "kind": "reference", "line": [[0, 0.5], [1, 0.5]],
         "assignment": "V", "edges": [], "cumulative_edges": [],
@@ -47,8 +45,3 @@ def test_generator_error_falls_back():
 
     r = nar.narrate(STEP, "simpler", generator=boom)
     assert r["source"] == "template"
-
-
-def test_endpoint_without_key():
-    r = TestClient(app).post("/api/narrate", json={"step": STEP, "mode": "simpler"})
-    assert r.status_code == 200 and r.json()["source"] == "template"

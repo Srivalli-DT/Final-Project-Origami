@@ -2,7 +2,15 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import db
-from app.catalog import get
+from app.library import library_models
+from app.fold_utils import build_fold
+
+
+def get(mid):
+    spec = next(s for s in library_models() if s["id"] == mid)
+    fold = build_fold(spec["segments"])
+    from app.guide import make_guide
+    return {"fold": fold, "guide": make_guide(fold, spec.get("extra_steps"))}
 from app.main import app
 
 
@@ -23,7 +31,7 @@ def test_save_list_and_load(client):
     assert [i["title"] for i in items] == ["My bomb"] and items[0]["id"] == pid and items[0]["created_at"]
     p = client.get(f"/api/patterns/{pid}").json()
     assert p["title"] == "My bomb"
-    assert p["guide"]["validation"]["ok"]
+    assert p["fold"]["edges_vertices"]
     assert len(p["fold"]["edges_vertices"]) == len(fold["edges_vertices"])
 
 

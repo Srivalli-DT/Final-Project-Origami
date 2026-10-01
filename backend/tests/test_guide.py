@@ -1,4 +1,12 @@
-from app.catalog import get
+from app.library import library_models
+from app.fold_utils import build_fold
+
+
+def get(mid):
+    spec = next(s for s in library_models() if s["id"] == mid)
+    fold = build_fold(spec["segments"])
+    from app.guide import make_guide
+    return {"fold": fold, "guide": make_guide(fold, spec.get("extra_steps"))}
 from app.fold_utils import EPS, build_fold
 from app.guide import make_guide
 
