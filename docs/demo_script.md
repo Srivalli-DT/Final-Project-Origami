@@ -1,37 +1,32 @@
-# CreaseLens — 3-minute demo script
+# CreaseLens: 3-minute demo script
 
-**Before you start (2 minutes early):** open `<your-site>.vercel.app/health` so the backend function is warm.
-Then open the site. Have `frontend/public/samples/preliminary-error.png` ready, and Origami
-Simulator (https://origamisimulator.org) open in another tab.
+**Before you start:** open `https://final-project-origami.vercel.app/health` so the backend function is
+warm. Use a fresh browser profile so the welcome prompt appears.
 
-## 1. The Hub (0:00–0:25)
-- "Crease patterns are how modern origami is published, but they don't tell you the order to fold."
-- Show the hero line and the three tabs: **Bases**, **Tessellations**, **Modular**. Read one explainer.
-- Point out the difficulty badges and the "Upload your crease pattern" card.
+## 1. School path (0:00–0:30)
+- Enter a name in the welcome dialog.
+- Show the five levels: Level 1 open, the others locked. "A level unlocks at 60% of the previous one."
+- Open Level 1 and click **Valley Fold**. Fold one step, press **✓ Done**, and watch the XP badge go up.
 
-## 2. A guided model: Waterbomb base (0:25–1:00)
-- Open **Waterbomb Base**.
-- Left: the sequenced crease pattern — the current crease is bold, finished ones grey, future ones faint.
-- Press **Play**: the book folds and diagonals fold and unfold in 3D, then the collapse.
-- Drag the scrub slider on the collapse step to show the hinge animation ("simplified preview").
+## 2. Crane player (0:30–1:20)
+- Library → Birds → **Crane**.
+- Left: the crease pattern grows step by step; the current crease is animated. Right: the 3D paper.
+- Play the square-base collapse, then scrub the fold-progress slider by hand.
+- Hover the current crease; its fold axis lights up in 3D.
+- Open **i** for tips and common mistakes, then ask "which way does the petal go?" or press **I'm stuck**.
+- Step to the end: wings, neck, tail and head.
 
-## 3. Upload with a deliberate error (1:00–1:50)
-- Go to **Upload** → **Try a sample: "Preliminary base with an error"**.
-- Show the detected-lines overlay next to the editable CP, and the confidence and grid.
-- Validation shows a **red dot** at the centre: "Maekawa: 4 mountain vs 4 valley".
-- Click the wrong crease (the right half of the horizontal line) once: M → V. The dot turns
-  **green**: "Every vertex passes Maekawa and Kawasaki".
-- Press **Generate guide** → the player opens with the fixed pattern.
+## 3. Rules → exception (1:20–1:50)
+- Rules → **Kawasaki**: the statement, why it holds, and its exceptions (curved creases, 3D shaping).
+- **Open in Studio** loads the demo vertex.
 
-## 4. "I'm stuck" (1:50–2:15)
-- On a reference step press **I'm stuck**: a simpler explanation appears, with what the paper should
-  look like and a common mistake. Mention it comes from Gemini, with a template fallback.
-- Toggle **Read aloud**.
+## 4. Studio (1:50–2:40)
+- Every rule passes. Draw a valley line across the pattern: Maekawa, Kawasaki and big-little-big show ✗,
+  and the failing vertices are circled in red.
+- Ctrl+Z: everything passes again.
+- Drag the **Fold** slider; turn on **Strain** (viridis legend); grab a corner of the 3D paper and pull it.
+- Press **?** to show that everything works from the keyboard.
 
-## 5. Export video (2:15–2:40)
-- Press **Export video**; the progress runs while the guide plays, then `…-guide.webm` downloads.
-  (It records in real time: keep the tab visible. If time is short, show a pre-recorded file.)
-
-## 6. Download .fold → Origami Simulator (2:40–3:00)
-- Press **.fold**, drag the file into Origami Simulator and fold it with the slider.
-- Close: "From a screenshot to a checked, sequenced, animated lesson."
+## 5. Progress (2:40–3:00)
+- **Save** the pattern, then open **Profile**: level, XP bar, completed tutorials and My patterns.
+- "Every tutorial step runs through the fold engine, and the same rules power the Studio."
