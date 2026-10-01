@@ -28,3 +28,20 @@ def test_missing_pattern_and_bad_title(client):
 def test_postgres_url_rewrite(monkeypatch):
     monkeypatch.setenv("DATABASE_URL", "postgres://u:p@host/db")
     assert db._url().startswith("postgresql://")
+
+
+def test_v1_pattern_table_is_migrated(tmp_path, monkeypatch):
+    import sqlite3
+
+    path = tmp_path / "old.db"
+    con = sqlite3.connect(path)
+    con.execute("CREATE TABLE pattern (id INTEGER PRIMARY KEY, title VARCHAR, fold_json VARCHAR, created_at DATETIME)")
+    con.commit()
+    con.close()
+    monkeypatch.setenv("DATABASE_URL", f"sqlite:///{path}")
+    db.reset_engine()
+    try:
+        pid = db.create_pattern("old", _fold("kite-base"), "u1")
+        assert db.list_patterns("u1")[0]["id"] == pid
+    finally:
+        db.reset_engine()

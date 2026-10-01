@@ -4,9 +4,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
+from . import ask as ask_mod
 from . import db, studio
 from .fold_utils import normalize_fold
-from .models import PatternCreate, ProgressUpdate, StudioCheck, StudioPreview, UserCreate
+from .models import AskRequest, PatternCreate, ProgressUpdate, StudioCheck, StudioPreview, UserCreate
 from .seed import levels as level_defs
 
 
@@ -134,3 +135,15 @@ def post_studio_check(req: StudioCheck):
 @app.post("/api/studio/preview")
 def post_studio_preview(req: StudioPreview):
     return studio.preview(req.fold.model_dump())
+
+
+# ---------------------------------------------------------------- ask
+
+@app.post("/api/ask")
+def post_ask(req: AskRequest):
+    t = db.tutorial(req.tutorial_id)
+    if t is None:
+        raise HTTPException(404, "unknown tutorial")
+    if req.step_index >= len(t["steps"]):
+        raise HTTPException(422, "step_index out of range")
+    return ask_mod.ask(t, req.step_index, req.question)

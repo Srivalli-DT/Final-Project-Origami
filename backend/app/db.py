@@ -10,6 +10,7 @@ import os
 import uuid
 from datetime import datetime, timezone
 
+from sqlalchemy import inspect, text
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 _engine = None
@@ -86,9 +87,18 @@ def get_engine():
         args = {"check_same_thread": False} if url.startswith("sqlite") else {}
         _engine = create_engine(url, connect_args=args, pool_pre_ping=True)
         SQLModel.metadata.create_all(_engine)
+        _migrate(_engine)
         from .seed import seed
         seed(_engine)
     return _engine
+
+
+def _migrate(engine) -> None:
+    """Add columns introduced after v1 to existing tables (create_all never alters tables)."""
+    cols = {c["name"] for c in inspect(engine).get_columns("pattern")}
+    if "user_id" not in cols:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE pattern ADD COLUMN user_id VARCHAR"))
 
 
 def reset_engine() -> None:
