@@ -2,19 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg: #0e1014;
+  --panel: #161920;
+  --panel-2: #1d212b;
+  --border: #2a2f3a;
+  --text: #e7e9ee;
+  --muted: #8a92a6;
+  --accent: #f5b14c;
+  --mountain: #ff5d5d;
+  --valley: #4da3ff;
+  --flat: #6b7280;
+  --success: #3ccf91;
+  --warning: #f5b14c;
+  --error: #ff5d5d;
+  --paper-front: #e2553f;
+  --paper-back: #f3e6cc;
+  color-scheme: dark;
+}
+
+html {
+  font-size: 15px;
+}
 body {
-  background: #faf7f0;
-  color: #2b2622;
+  @apply bg-bg font-sans text-text antialiased;
+}
+
+/* visible 2px accent focus ring on every interactive element */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center gap-1 rounded-lg border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-800 shadow-sm transition hover:border-stone-500 disabled:cursor-not-allowed disabled:opacity-40;
+  .icon-btn {
+    @apply inline-flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-lg border border-line bg-panel2 px-2 text-text transition-colors hover:border-muted disabled:cursor-not-allowed disabled:opacity-40;
   }
-  .btn-primary {
-    @apply border-accent bg-accent text-white hover:bg-[#a93226];
+  .icon-btn[aria-pressed="true"] {
+    @apply border-accent text-accent;
   }
-  .card {
-    @apply rounded-xl border border-stone-200 bg-white shadow-sm;
+  .btn-accent {
+    @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-accent px-3 font-medium text-bg hover:brightness-110 disabled:opacity-40;
+  }
+  .panel {
+    @apply rounded-lg border border-line bg-panel;
+  }
+  .chip {
+    @apply inline-flex h-9 items-center gap-1.5 rounded-lg border border-line bg-panel2 px-3 text-sm text-text hover:border-muted;
+  }
+  .chip[aria-pressed="true"] {
+    @apply border-accent text-accent;
+  }
+  .skip-link {
+    @apply absolute left-2 top-2 z-[100] -translate-y-16 rounded-lg bg-accent px-3 py-2 font-medium text-bg focus:translate-y-0;
+  }
+  .mono {
+    @apply font-mono;
+  }
+}
+
+@keyframes dash-move {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.crease-current {
+  animation: dash-move 1s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .crease-current {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
   }
 }
