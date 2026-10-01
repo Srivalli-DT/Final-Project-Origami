@@ -1,0 +1,56 @@
+id: square-base
+title: Square Base
+category: bases
+level: 2
+minutes: 5
+paper: {width: 1, height: 1, start: colour_up}
+tags: [base, preliminary, traditional]
+description: Also called the preliminary base. Diagonals are valleys, book folds mountains.
+steps:
+  - op: crease
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    title: Diagonal crease
+    instruction: Fold corner to corner, then unfold.
+    tips: ["Corners exactly together."]
+    mistakes: ["A crease that misses the centre."]
+    symbol: fold-unfold
+  - op: crease
+    line: {through: ["P(1,0)", "P(0,1)"]}
+    kind: valley
+    title: Other diagonal
+    instruction: Fold the other two corners together, then unfold.
+    tips: ["Both diagonals cross at the centre."]
+    mistakes: ["Reusing the first diagonal."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the paper over.
+    tips: ["Book folds go in from the back."]
+    mistakes: ["Creasing book folds on the front."]
+    symbol: turn-over
+  - op: crease
+    lines:
+      - line: {horizontal: "P(0,0.5)"}
+        kind: valley
+      - line: {vertical: "P(0.5,0)"}
+        kind: valley
+    title: Book creases
+    instruction: Crease both book folds, then unfold.
+    tips: ["Edge to edge each time."]
+    mistakes: ["Folding diagonally again."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn back
+    instruction: Turn the paper back over.
+    tips: ["Diagonals are valleys from this side."]
+    mistakes: ["Collapsing from the wrong side."]
+    symbol: turn-over
+  - op: collapse
+    flat: [[[0.5, 0.5], [0, 0]], [[0.5, 0.5], [1, 1]]]
+    title: Collapse
+    instruction: Bring all four corners down together.
+    tips: ["Let the creases guide you; do not force them."]
+    mistakes: ["Collapsing into a triangle, which is the waterbomb."]
+    symbol: squash
+    check: A small square with the open end down.

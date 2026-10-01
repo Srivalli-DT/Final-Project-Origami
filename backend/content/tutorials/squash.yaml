@@ -1,0 +1,65 @@
+id: squash
+title: Squash Fold
+category: foundations
+level: 1
+minutes: 5
+paper: {width: 1, height: 1, start: colour_up}
+tags: [squash]
+description: A flap is opened and flattened symmetrically.
+steps:
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Make a triangle
+    instruction: Fold the top-left corner to the bottom-right corner.
+    tips: ["Keep the colour on the inside."]
+    mistakes: ["Corners not meeting."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,0.5)", "P(1,0)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Fold in half
+    instruction: Fold the triangle in half, point to point.
+    tips: ["The small triangle has a closed corner at the centre."]
+    mistakes: ["Folding the wrong pair of points together."]
+    symbol: valley
+  - op: unfold
+    to_step: -1
+    title: Open the paper
+    instruction: Unfold back to a square.
+    tips: ["You now have both diagonals as valleys."]
+    mistakes: ["Tearing the centre while opening."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the paper over.
+    tips: ["The next creases go in from this side."]
+    mistakes: ["Skipping the turn, so the creases come out reversed."]
+    symbol: turn-over
+  - op: crease
+    lines:
+      - line: {horizontal: "P(0,0.5)"}
+        kind: valley
+      - line: {vertical: "P(0.5,0)"}
+        kind: valley
+    title: Book creases
+    instruction: Crease both book folds, then unfold.
+    tips: ["Fold edge to edge each time."]
+    mistakes: ["Folding corner to corner instead."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn back
+    instruction: Turn the paper back over.
+    tips: ["Diagonals are valleys, book folds mountains."]
+    mistakes: ["Losing track of which side is which."]
+    symbol: turn-over
+  - op: collapse
+    flat: [[[0.5, 0.5], [0, 0]], [[0.5, 0.5], [1, 1]]]
+    title: Squash flat
+    instruction: Open the flap and squash it into a square.
+    tips: ["Press the centre down so the sides spread evenly."]
+    mistakes: ["An uneven squash that leaves a lopsided square."]
+    symbol: squash
+    check: A small square with the closed corner on top.

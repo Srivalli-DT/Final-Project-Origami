@@ -1,0 +1,33 @@
+id: turn-over-rotate
+title: Turn Over & Rotate
+category: foundations
+level: 1
+minutes: 2
+paper: {width: 1, height: 1, start: colour_up}
+tags: [basics]
+description: Diagrams turn and rotate the paper between folds.
+steps:
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Make a triangle
+    instruction: Fold the top-left corner to the bottom-right corner.
+    tips: ["Crease firmly so the triangle stays closed."]
+    mistakes: ["Uneven corners."]
+    symbol: valley
+  - op: turn_over
+    axis: vertical
+    title: Turn over
+    instruction: Flip the triangle over, left to right.
+    tips: ["The circle-arrow symbol means turn over."]
+    mistakes: ["Rotating instead of flipping."]
+    symbol: turn-over
+  - op: rotate
+    deg: -135
+    title: Rotate
+    instruction: Turn the triangle so the long edge is at the bottom.
+    tips: ["Rotating keeps the same side facing you."]
+    mistakes: ["Flipping the paper while rotating."]
+    symbol: rotate
+    check: The long edge is at the bottom.

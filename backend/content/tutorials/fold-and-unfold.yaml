@@ -1,0 +1,42 @@
+id: fold-and-unfold
+title: Fold & Unfold
+category: foundations
+level: 1
+minutes: 3
+paper: {width: 1, height: 1, start: colour_up}
+tags: [basics, precrease]
+description: Precreases are folded and opened again to make guide lines.
+steps:
+  - op: crease
+    line: {horizontal: "P(0,0.5)"}
+    kind: valley
+    title: Horizontal crease
+    instruction: Fold bottom edge to top edge, then unfold.
+    tips: ["Sharp precreases make later steps easier."]
+    mistakes: ["Creasing only part of the way across."]
+    symbol: fold-unfold
+  - op: crease
+    line: {vertical: "P(0.5,0)"}
+    kind: valley
+    title: Vertical crease
+    instruction: Fold left edge to right edge, then unfold.
+    tips: ["Use the first crease to check the edges are square."]
+    mistakes: ["Folding along the old crease again."]
+    symbol: fold-unfold
+  - op: crease
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    title: Diagonal crease
+    instruction: Fold corner to corner, then unfold.
+    tips: ["The diagonal should pass exactly through the centre."]
+    mistakes: ["Missing the centre point."]
+    symbol: fold-unfold
+  - op: crease
+    line: {through: ["P(1,0)", "P(0,1)"]}
+    kind: valley
+    title: Other diagonal
+    instruction: Fold the other corners together, then unfold.
+    tips: ["All four creases should meet at one point."]
+    mistakes: ["Creases that cross off-centre."]
+    symbol: fold-unfold
+    check: Four creases meeting at the centre.

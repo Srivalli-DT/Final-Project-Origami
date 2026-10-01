@@ -1,0 +1,63 @@
+id: triangle-base
+title: Triangle Base
+category: bases
+level: 2
+minutes: 5
+paper: {width: 1, height: 1, start: colour_up}
+tags: [base, waterbomb, traditional]
+description: Also called the waterbomb base. Book folds are valleys, diagonals mountains.
+steps:
+  - op: crease
+    line: {horizontal: "P(0,0.5)"}
+    kind: valley
+    title: Horizontal crease
+    instruction: Fold edge to edge, then unfold.
+    tips: ["Edges exactly on top of each other."]
+    mistakes: ["Off-centre crease."]
+    symbol: fold-unfold
+  - op: crease
+    line: {vertical: "P(0.5,0)"}
+    kind: valley
+    title: Vertical crease
+    instruction: Fold the other edges together, then unfold.
+    tips: ["Both creases cross at the centre."]
+    mistakes: ["Reusing the first crease."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the paper over.
+    tips: ["Diagonals go in from the back."]
+    mistakes: ["Forgetting to turn over."]
+    symbol: turn-over
+  - op: crease
+    lines:
+      - line: {through: ["P(0,0)", "P(1,1)"]}
+        kind: valley
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: valley
+    title: Diagonal creases
+    instruction: Crease both diagonals, then unfold.
+    tips: ["Corner to corner each time."]
+    mistakes: ["Creases missing the centre."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn back
+    instruction: Turn the paper back over.
+    tips: ["Book folds are valleys from this side."]
+    mistakes: ["Collapsing from the wrong side."]
+    symbol: turn-over
+  - op: collapse
+    flat: [[[0.5, 0.5], [0.5, 0]], [[0.5, 0.5], [0.5, 1]]]
+    title: Collapse
+    instruction: Push the sides in; flatten into a triangle.
+    tips: ["Bring the side midpoints down together."]
+    mistakes: ["Forcing one side before the other."]
+    symbol: squash
+  - op: rotate
+    deg: 90
+    title: Point up
+    instruction: Rotate so the closed point is at the top.
+    tips: ["Diagrams usually show the waterbomb point up."]
+    mistakes: ["Turning it over instead of rotating."]
+    symbol: rotate
+    check: A triangle with two flaps each side.

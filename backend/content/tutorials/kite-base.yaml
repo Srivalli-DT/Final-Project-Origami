@@ -1,0 +1,41 @@
+id: kite-base
+title: Kite Base
+category: bases
+level: 2
+minutes: 3
+paper: {width: 1, height: 1, start: white_up}
+tags: [base, traditional]
+description: Two edges folded to a diagonal. The start of the fish and the swan.
+steps:
+  - op: crease
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    title: Diagonal crease
+    instruction: Fold corner to corner, unfold.
+    tips: ["Align corners first, then press from the centre out."]
+    mistakes: ["Creasing before corners meet."]
+    symbol: fold-unfold
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(1,0)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Bottom edge in
+    instruction: Fold the bottom edge to the diagonal crease.
+    tips: ["Start at the sharp corner and keep the point crisp."]
+    mistakes: ["Overlapping the diagonal."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(0,1)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Left edge in
+    instruction: Fold the left edge to the diagonal crease.
+    tips: ["The two edges should just touch along the centre."]
+    mistakes: ["Leaving a gap between the edges."]
+    symbol: valley
+  - op: rotate
+    deg: 45
+    title: Point down
+    instruction: Rotate so the sharp point faces down.
+    tips: ["This is how most diagrams show the kite."]
+    mistakes: ["Turning the kite over."]
+    symbol: rotate
+    check: A kite with the sharp point down.

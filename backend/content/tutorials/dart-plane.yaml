@@ -1,0 +1,92 @@
+id: dart-plane
+title: Dart Plane
+category: planes
+level: 2
+minutes: 5
+paper: {width: 1, height: 1.414, start: colour_up}
+tags: [plane, rectangle, a4]
+description: The classic fast dart from A4 paper.
+steps:
+  - op: crease
+    line: {vertical: "P(0.5,0)"}
+    kind: valley
+    title: Centre crease
+    instruction: Fold in half lengthwise, then unfold.
+    tips: ["This crease is the keel of the plane."]
+    mistakes: ["Folding along the short side."]
+    symbol: fold-unfold
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(0,h-0.5)"]}
+    kind: valley
+    move: "P(0,h)"
+    title: Left corner in
+    instruction: Fold the top-left corner to the centre crease.
+    tips: ["The top edge lies along the centre line."]
+    mistakes: ["Overlapping the centre line."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(1,h-0.5)"]}
+    kind: valley
+    move: "P(1,h)"
+    title: Right corner in
+    instruction: Fold the top-right corner to the centre crease.
+    tips: ["Both sides meet at a sharp point."]
+    mistakes: ["A blunt or uneven nose."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(0,h-0.5/t22)"]}
+    kind: valley
+    move: "P(0,h-0.5)"
+    title: Left edge in
+    instruction: Fold the new left edge to the centre.
+    tips: ["Keep the nose point sharp."]
+    mistakes: ["Starting the fold below the point."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(1,h-0.5/t22)"]}
+    kind: valley
+    move: "P(1,h-0.5)"
+    title: Right edge in
+    instruction: Fold the new right edge to the centre.
+    tips: ["Edges meet without overlapping."]
+    mistakes: ["Edges crossing the centre line."]
+    symbol: valley
+  - op: fold
+    line: {vertical: "P(0.5,0)"}
+    kind: mountain
+    move: "P(0,0)"
+    title: Fold in half
+    instruction: Fold the left half behind along the centre.
+    tips: ["The folded flaps stay inside."]
+    mistakes: ["Folding the flaps outside."]
+    symbol: mountain
+  - op: fold
+    line: {vertical: "F(0.62,0)"}
+    kind: valley
+    move: "P(1,0)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 1.414]
+    title: Front wing
+    instruction: Fold the front wing down along the line.
+    tips: ["The wing edge lines up with the keel."]
+    mistakes: ["Folding both wings at once."]
+    symbol: valley
+  - op: fold
+    line: {vertical: "F(0.62,0)"}
+    kind: mountain
+    move: "P(0,0)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 1.414]
+    title: Back wing
+    instruction: Fold the back wing behind to match.
+    tips: ["Both wings the same width."]
+    mistakes: ["Uneven wings that make it spiral."]
+    symbol: mountain
+  - op: unfold
+    to_step: 4
+    title: Open the wings
+    instruction: Open the wings level, seen from above.
+    tips: ["A slight upward tilt helps it glide."]
+    mistakes: ["Wings drooping down."]
+    symbol: inflate
+    check: A dart with a sharp nose and level wings.

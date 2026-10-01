@@ -1,0 +1,79 @@
+id: cup
+title: Paper Cup
+category: boxes
+level: 2
+minutes: 4
+paper: {width: 1, height: 1, start: colour_up}
+tags: [traditional, simple, useful]
+description: A cup that really holds water for a while.
+steps:
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Make a triangle
+    instruction: Fold the square in half diagonally.
+    tips: ["Crease firmly; this edge is the cup bottom."]
+    mistakes: ["Corners not lined up."]
+    symbol: valley
+  - op: rotate
+    deg: 135
+    title: Point up
+    instruction: Rotate so the long edge is at the bottom.
+    tips: ["The open layers point up."]
+    mistakes: ["Putting the open edge at the bottom."]
+    symbol: rotate
+  - op: fold
+    line: {point_to_point: ["P(1,1)", "P(2-sqrt(2),0)"]}
+    kind: valley
+    move: "P(1,1)"
+    title: Left corner across
+    instruction: Fold the left corner to the right edge.
+    tips: ["The top edge of the flap should be level."]
+    mistakes: ["Tilting the flap upward."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["P(0,0)", "P(1,sqrt(2)-1)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Right corner across
+    instruction: Fold the right corner to the left edge.
+    tips: ["Both flaps meet at the same height."]
+    mistakes: ["Folding the right corner too high."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(2-sqrt(2),0)", "P(1,sqrt(2)-1)"]}
+    kind: valley
+    move: "P(0,1)"
+    layers: flap
+    flap_count: 1
+    title: Front flap down
+    instruction: Fold the front top layer down over the flaps.
+    tips: ["Tuck it in front of the folded corners."]
+    mistakes: ["Folding both top layers to the front."]
+    symbol: valley
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the cup over.
+    tips: ["The last top layer now faces you."]
+    mistakes: ["Unfolding the flaps while turning."]
+    symbol: turn-over
+  - op: fold
+    line: {through: ["P(2-sqrt(2),0)", "P(1,sqrt(2)-1)"]}
+    kind: valley
+    move: "P(1,0)"
+    layers: flap
+    flap_count: 1
+    title: Back flap down
+    instruction: Fold the remaining top layer down.
+    tips: ["Same line as the front flap."]
+    mistakes: ["Folding it inside the cup."]
+    symbol: valley
+  - op: shape
+    note: Open the cup by pushing the sides.
+    title: Open the cup
+    instruction: Squeeze the sides to open the cup.
+    tips: ["Press the corners gently toward each other."]
+    mistakes: ["Tearing the bottom crease."]
+    symbol: inflate
+    check: A cup with a pocket at the top.

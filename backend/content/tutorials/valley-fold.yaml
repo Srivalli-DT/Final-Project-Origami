@@ -1,0 +1,35 @@
+id: valley-fold
+title: Valley Fold
+category: foundations
+level: 1
+minutes: 2
+paper: {width: 1, height: 1, start: colour_up}
+tags: [basics]
+description: The paper folds toward you, making a valley.
+steps:
+  - op: fold
+    line: {horizontal: "P(0,0.5)"}
+    kind: valley
+    title: Fold in half
+    instruction: Fold the bottom edge up to the top edge.
+    tips: ["Line up the corners first, then press the crease from the middle out."]
+    mistakes: ["Pressing the crease before the edges meet."]
+    symbol: valley
+    check: A rectangle, half as tall.
+  - op: unfold
+    to_step: -1
+    title: Unfold
+    instruction: Open the paper flat again.
+    tips: ["The crease now dips away from you like a valley."]
+    mistakes: ["Flattening the crease out completely."]
+    symbol: fold-unfold
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(1,0)"
+    title: Diagonal valley
+    instruction: Fold the bottom-right corner to the top-left corner.
+    tips: ["Hold the corners together with one finger while you crease."]
+    mistakes: ["Letting the corners slide apart."]
+    symbol: valley
+    check: A triangle.

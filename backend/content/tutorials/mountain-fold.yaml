@@ -1,0 +1,41 @@
+id: mountain-fold
+title: Mountain Fold
+category: foundations
+level: 1
+minutes: 2
+paper: {width: 1, height: 1, start: colour_up}
+tags: [basics]
+description: The paper folds away from you, making a mountain.
+steps:
+  - op: fold
+    line: {horizontal: "P(0,0.5)"}
+    kind: mountain
+    move: "P(0.5,0)"
+    title: Fold behind
+    instruction: Fold the bottom half behind the top half.
+    tips: ["Lift the paper slightly so you can see both edges meet."]
+    mistakes: ["Folding toward you instead of behind."]
+    symbol: mountain
+  - op: unfold
+    to_step: -1
+    title: Unfold
+    instruction: Open the paper flat again.
+    tips: ["The crease now points up at you like a ridge."]
+    mistakes: ["Turning the paper over by accident."]
+    symbol: fold-unfold
+  - op: turn_over
+    axis: vertical
+    title: Turn over
+    instruction: Turn the paper over, left to right.
+    tips: ["From this side the same crease is a valley."]
+    mistakes: ["Turning top to bottom instead."]
+    symbol: turn-over
+  - op: fold
+    line: {horizontal: "P(0,0.5)"}
+    kind: valley
+    move: "P(0.5,0)"
+    title: Same crease
+    instruction: Valley fold along the same crease.
+    tips: ["A mountain on one side is a valley on the other."]
+    mistakes: ["Making a new crease next to the old one."]
+    symbol: valley

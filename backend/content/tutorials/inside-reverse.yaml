@@ -1,0 +1,53 @@
+id: inside-reverse
+title: Inside Reverse Fold
+category: foundations
+level: 1
+minutes: 5
+paper: {width: 1, height: 1, start: colour_up}
+tags: [reverse-fold]
+description: A point folds inside itself, reversing the centre crease.
+steps:
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Make a triangle
+    instruction: Fold the top-left corner to the bottom-right corner.
+    tips: ["The fold edge becomes the spine of the reverse fold."]
+    mistakes: ["A loose fold edge."]
+    symbol: valley
+  - op: crease
+    line: {through: ["P(0.7,0.7)", "P(1,0.6)"]}
+    kind: valley
+    title: Crease the point
+    instruction: Fold the point over through both layers, then unfold.
+    tips: ["A sharp precrease guides the reverse fold."]
+    mistakes: ["Creasing only the top layer."]
+    symbol: fold-unfold
+  - op: unfold
+    to_step: -1
+    title: Open the paper
+    instruction: Unfold back to a square.
+    tips: ["Look for the two creases that meet the diagonal."]
+    mistakes: ["Losing track of the point creases."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {through: ["P(0.7,0.7)", "P(1,1)"]}
+        kind: mountain
+        clip: ["P(0.7,0.7)", "P(1,1)"]
+      - line: {through: ["P(0.7,0.7)", "P(0.6,1)"]}
+        kind: valley
+        clip: ["P(0.7,0.7)", "P(0.6,1)"]
+    title: Reverse the tip
+    instruction: Reverse the diagonal at the tip and one point crease.
+    tips: ["Only the short creases near the point change."]
+    mistakes: ["Reversing the whole diagonal."]
+    symbol: reverse
+  - op: collapse
+    title: Push inside
+    instruction: Refold the diagonal; push the point inside.
+    tips: ["Open the layers slightly and push the spine in."]
+    mistakes: ["Folding the point outside instead of between the layers."]
+    symbol: reverse
+    check: The point sits between the two layers.

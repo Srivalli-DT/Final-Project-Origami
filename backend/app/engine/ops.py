@@ -269,10 +269,8 @@ def crease(state: State, lines: list[dict]):
             axis, direction = ax, 1 if k == "V" else -1
         for a, b, asg in creases:
             _add_crease(s, a, b, asg)
-    if len(lines) > 1:
-        axis, direction = None, 0  # several creases at once: no single motion
-        before = snapshot(s)
-    return s, _keyframe("crease", before, s, axis=axis, direction=direction)
+    # several creases at once: the first one is animated, the rest appear with it
+    return s, _keyframe("crease", before, s, axis=axis, direction=direction, crease_count=len(lines))
 
 
 def turn_over(state: State, axis: str = "vertical"):

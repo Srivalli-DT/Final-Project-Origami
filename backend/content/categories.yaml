@@ -1,0 +1,12 @@
+- {id: foundations, title: Foundations, icon: graduation-cap, description: Basic folds every model uses.}
+- {id: bases, title: Bases, icon: square, description: Standard starting shapes.}
+- {id: animals, title: Animals, icon: paw-print, description: Dogs, cats and other creatures.}
+- {id: birds, title: Birds, icon: bird, description: Cranes, swans and other birds.}
+- {id: flowers, title: Flowers, icon: flower-2, description: Blossoms and leaves.}
+- {id: boxes, title: Boxes, icon: box, description: Boxes, cups and containers.}
+- {id: planes, title: Planes, icon: plane, description: Paper planes that fly.}
+- {id: action, title: Action, icon: zap, description: Models that move.}
+- {id: masks, title: Masks, icon: smile, description: Faces and masks.}
+- {id: modular, title: Modular, icon: boxes, description: Many units, one model.}
+- {id: tessellations, title: Tessellations, icon: grid-3x3, description: Repeating pleats and twists.}
+- {id: geometric, title: Geometric, icon: hexagon, description: Polyhedra and stars.}
