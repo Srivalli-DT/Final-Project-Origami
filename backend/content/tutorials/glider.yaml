@@ -1,0 +1,112 @@
+id: glider
+title: Glider
+category: planes
+level: 2
+minutes: 6
+paper: {width: 1, height: 1.414, start: colour_up}
+tags: [plane, rectangle, a4, nakamura]
+description: A slow, steady glider with a blunt locked nose.
+steps:
+  - op: crease
+    line: {vertical: "P(0.5,0)"}
+    kind: valley
+    title: Centre crease
+    instruction: Fold in half lengthwise, then unfold.
+    tips: ["The keel of the glider."]
+    mistakes: ["Folding across the short side."]
+    symbol: fold-unfold
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(0,h-0.5)"]}
+    kind: valley
+    move: "P(0,h)"
+    title: Left corner in
+    instruction: Fold the top-left corner to the centre.
+    tips: ["Top edge on the centre line."]
+    mistakes: ["Overlapping the centre."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,h)", "P(1,h-0.5)"]}
+    kind: valley
+    move: "P(1,h)"
+    title: Right corner in
+    instruction: Fold the top-right corner to the centre.
+    tips: ["A pointed house shape."]
+    mistakes: ["An uneven point."]
+    symbol: valley
+  - op: fold
+    line: {horizontal: "P(0,h-0.5)"}
+    kind: valley
+    move: "P(0.5,h)"
+    title: Nose down
+    instruction: Fold the point down along the triangle's base.
+    tips: ["The tip lands on the centre line."]
+    mistakes: ["Folding too far down."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["corner:tl", "B(0.5,0.62)"]}
+    kind: valley
+    move: "corner:tl"
+    title: Corner in
+    instruction: Fold the top-left corner to the centre line.
+    tips: ["Leave the small tip showing below."]
+    mistakes: ["Covering the tip."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["corner:tr", "B(0.5,0.62)"]}
+    kind: valley
+    move: "corner:tr"
+    title: Corner in
+    instruction: Fold the top-right corner to match.
+    tips: ["Both corners meet on the centre."]
+    mistakes: ["Corners overlapping."]
+    symbol: repeat
+  - op: fold
+    line: {horizontal: "B(0.5,0.55)"}
+    kind: valley
+    move: "B(0.5,0.5)"
+    layers: flap
+    flap_count: 1
+    title: Lock
+    instruction: Fold the small tip up over the corners.
+    tips: ["It locks the flaps in place."]
+    mistakes: ["Folding the whole nose."]
+    symbol: valley
+  - op: fold
+    line: {vertical: "P(0.5,0)"}
+    kind: mountain
+    move: "P(0,0)"
+    title: Fold in half
+    instruction: Fold in half behind along the centre.
+    tips: ["The lock stays outside."]
+    mistakes: ["Folding the lock inside."]
+    symbol: mountain
+  - op: fold
+    line: {vertical: "F(0.65,0)"}
+    kind: valley
+    move: "P(1,0)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 1.414]
+    title: Front wing
+    instruction: Fold the front wing down.
+    tips: ["Parallel to the keel."]
+    mistakes: ["A slanted wing fold."]
+    symbol: valley
+  - op: fold
+    line: {vertical: "F(0.65,0)"}
+    kind: mountain
+    move: "P(0,0)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 1.414]
+    title: Back wing
+    instruction: Fold the back wing behind to match.
+    tips: ["Both wings equal."]
+    mistakes: ["Uneven wings."]
+    symbol: mountain
+  - op: unfold
+    to_step: 6
+    title: Open the wings
+    instruction: Open the wings level, seen from above.
+    tips: ["Throw it gently and level."]
+    mistakes: ["Throwing hard; gliders like slow launches."]
+    symbol: inflate
+    check: A wide glider with a blunt nose.

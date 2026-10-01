@@ -1,0 +1,98 @@
+id: swan
+title: Swan
+category: birds
+level: 3
+minutes: 8
+paper: {width: 1, height: 1, start: white_up}
+tags: [traditional, kite-base]
+description: A floating swan from the kite base.
+steps:
+  - op: crease
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    title: Diagonal
+    instruction: Fold corner to corner, then unfold.
+    tips: ["This becomes the swan's centre line."]
+    mistakes: ["Off-centre crease."]
+    symbol: fold-unfold
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(1,0)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Kite fold
+    instruction: Fold the bottom edge to the diagonal.
+    tips: ["Keep the sharp point crisp."]
+    mistakes: ["Overlapping the diagonal."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(0,1)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Kite fold
+    instruction: Fold the left edge to the diagonal.
+    tips: ["Now you have a kite base."]
+    mistakes: ["A gap at the centre line."]
+    symbol: valley
+  - op: rotate
+    deg: 45
+    title: Point down
+    instruction: Rotate so the sharp point faces down.
+    tips: ["The wide end is at the top."]
+    mistakes: ["Turning it over."]
+    symbol: rotate
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the kite over.
+    tips: ["The back is plain."]
+    mistakes: ["Rotating instead of turning over."]
+    symbol: turn-over
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(1,t22)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Narrow
+    instruction: Fold one long edge to the centre line.
+    tips: ["Start at the sharp point."]
+    mistakes: ["Folding the wide end."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(t22,1)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    title: Narrow
+    instruction: Fold the other long edge to the centre.
+    tips: ["A very thin point now."]
+    mistakes: ["Edges crossing the centre."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Neck up
+    instruction: Fold the thin point up to the wide end.
+    tips: ["This makes the neck."]
+    mistakes: ["Folding it down instead."]
+    symbol: valley
+  - op: fold
+    line: {horizontal: "B(0.5,0.85)"}
+    kind: valley
+    move: "B(0.5,0.99)"
+    layers: flap
+    flap_count: 4
+    title: Head
+    instruction: Fold the tip back down for the head.
+    tips: ["A short head about a fifth of the neck."]
+    mistakes: ["A head that is too long."]
+    symbol: valley
+  - op: fold
+    line: {vertical: "B(0.5,0.5)"}
+    kind: mountain
+    title: Fold in half
+    instruction: Fold in half behind along the centre line.
+    tips: ["The neck stays on the outside."]
+    mistakes: ["Folding toward you."]
+    symbol: mountain
+  - op: shape
+    note: Pull the neck up and the head forward, pinching new creases.
+    title: Raise the neck
+    instruction: Pull the neck up and the head out.
+    tips: ["Pinch firmly at the base of the neck."]
+    mistakes: ["Unfolding the body while pulling."]
+    symbol: reverse
+    check: A swan with an upright neck.

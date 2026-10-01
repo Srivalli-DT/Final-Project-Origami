@@ -1,0 +1,92 @@
+id: fish-base
+title: Fish Base
+category: bases
+level: 3
+minutes: 10
+paper: {width: 1, height: 1, start: white_up}
+tags: [base, traditional, rabbit-ear]
+description: Kite folds at both ends of a diagonal, finished with two rabbit ears.
+steps:
+  - op: crease
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    title: Diagonal
+    instruction: Fold corner to corner, then unfold.
+    tips: ["This diagonal is the fish's spine."]
+    mistakes: ["Creasing the other diagonal."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: mountain
+    title: Other diagonal
+    instruction: Mountain-crease the other diagonal.
+    tips: ["It guides the rabbit ears later."]
+    mistakes: ["Making it a valley."]
+    symbol: fold-unfold
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(1,0)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    move: "P(0.9,0.05)"
+    layers: paper
+    paper_rect: [0, 0, 1, 0.5]
+    title: Kite fold
+    instruction: Fold the bottom edge to the spine.
+    tips: ["Keep the sharp point crisp."]
+    mistakes: ["Overlapping the spine."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(0,1)"], ["P(0,0)", "P(1,1)"]]}
+    kind: valley
+    move: "P(0.05,0.9)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 1]
+    title: Kite fold
+    instruction: Fold the left edge to the spine.
+    tips: ["A kite base."]
+    mistakes: ["A gap at the spine."]
+    symbol: repeat
+  - op: unfold
+    to_step: 1
+    title: Unfold
+    instruction: Unfold both kite folds.
+    tips: ["Keep the creases sharp."]
+    mistakes: ["Flattening the creases out."]
+    symbol: fold-unfold
+  - op: fold
+    line: {line_to_line: [["P(1,1)", "P(1,0)"], ["P(1,1)", "P(0,0)"]]}
+    kind: valley
+    move: "P(0.95,0.1)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 1]
+    title: Other end
+    instruction: Kite-fold the right edge to the spine.
+    tips: ["Same as before, from the other corner."]
+    mistakes: ["Folding from the sharp end again."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(1,1)", "P(0,1)"], ["P(1,1)", "P(0,0)"]]}
+    kind: valley
+    move: "P(0.1,0.95)"
+    layers: paper
+    paper_rect: [0, 0.5, 1, 1]
+    title: Other end
+    instruction: Kite-fold the top edge to the spine.
+    tips: ["Two kite folds point the other way."]
+    mistakes: ["Uneven folds."]
+    symbol: repeat
+  - op: rotate
+    deg: 45
+    title: Spine vertical
+    instruction: Rotate so the spine is vertical.
+    tips: ["The side corners are at the middle."]
+    mistakes: ["Turning it over."]
+    symbol: rotate
+  - op: shape
+    note: Refold the first kite folds together with the new ones; the extra paper at each side pinches into a rabbit-ear flap that lies flat, pointing down.
+    title: Rabbit ears
+    instruction: Refold all four; pinch each side into a flap.
+    tips: ["Let the side corners swing down as small flaps."]
+    mistakes: ["Forcing the flaps up instead of down."]
+    symbol: squash
+    check: A diamond with a small flap on each side.

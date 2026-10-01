@@ -1,0 +1,50 @@
+id: pleat-strip
+title: Pleat Strip
+category: tessellations
+level: 4
+minutes: 8
+paper: {width: 1, height: 1, start: colour_up}
+tags: [tessellation, pleat, grid]
+description: "Alternating mountains and valleys on an 8-grid: the building block of tessellations."
+steps:
+  - op: crease
+    line: {vertical: "P(0.5,0)"}
+    kind: valley
+    title: Halves
+    instruction: Fold in half, then unfold.
+    tips: ["Divide the paper before pleating."]
+    mistakes: ["An off-centre half."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {vertical: "P(0.25,0)"}
+        kind: valley
+      - line: {vertical: "P(0.75,0)"}
+        kind: valley
+    title: Quarters
+    instruction: Fold both edges to the centre crease, unfold.
+    tips: ["Edges exactly on the centre line."]
+    mistakes: ["Creasing past the paper edge."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {vertical: "P(0.125,0)"}
+        kind: mountain
+      - line: {vertical: "P(0.375,0)"}
+        kind: mountain
+      - line: {vertical: "P(0.625,0)"}
+        kind: mountain
+      - line: {vertical: "P(0.875,0)"}
+        kind: mountain
+    title: Eighths
+    instruction: Mountain-crease halfway between every pair of creases.
+    tips: ["Or turn over and valley-fold edges to the nearest crease."]
+    mistakes: ["Making these valleys too."]
+    symbol: fold-unfold
+  - op: collapse
+    title: Pleat
+    instruction: Collapse along the creases like an accordion.
+    tips: ["Work from one edge, one pleat at a time."]
+    mistakes: ["Two valleys in a row."]
+    symbol: squash
+    check: A narrow stack of eight layers.

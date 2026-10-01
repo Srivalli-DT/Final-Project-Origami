@@ -97,6 +97,8 @@ def load_spec(path: Path) -> TutorialSpec:
         return TutorialSpec.model_validate(data)
     except ValidationError as e:
         raise CompileError(f"{path.stem}: {e}") from e
+    except yaml.YAMLError as e:
+        raise CompileError(f"{path.stem}: invalid YAML: {e}") from e
 
 
 _STEP_KEYS = set(StepSpec.model_fields)

@@ -1,0 +1,110 @@
+id: tulip
+title: Tulip Blossom
+category: flowers
+level: 3
+minutes: 10
+paper: {width: 1, height: 1, start: colour_up}
+tags: [flower, waterbomb, inflate]
+description: A puffy tulip blossom from the triangle base.
+steps:
+  - op: crease
+    lines:
+      - line: {horizontal: "P(0,0.5)"}
+        kind: valley
+      - line: {vertical: "P(0.5,0)"}
+        kind: valley
+    title: Book creases
+    instruction: Crease both book folds as valleys.
+    tips: ["Edge to edge, then unfold."]
+    mistakes: ["Creasing diagonals by mistake."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {through: ["P(0,0)", "P(1,1)"]}
+        kind: mountain
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: mountain
+    title: Diagonals
+    instruction: Mountain-crease both diagonals.
+    tips: ["Or turn over and valley-crease them."]
+    mistakes: ["Valley diagonals give a square base instead."]
+    symbol: fold-unfold
+  - op: collapse
+    flat: [[[0.5, 0.5], [0.5, 0]], [[0.5, 0.5], [0.5, 1]]]
+    title: Triangle base
+    instruction: Collapse into a triangle base.
+    tips: ["Push the side midpoints in together."]
+    mistakes: ["Collapsing into a square."]
+    symbol: squash
+  - op: rotate
+    deg: 90
+    title: Point up
+    instruction: Rotate so the closed point is at the top.
+    tips: ["Two flaps on each side."]
+    mistakes: ["Turning it over."]
+    symbol: rotate
+  - op: fold
+    line: {point_to_point: ["F(-0.25,0.25)", "F(0.25,0.75)"]}
+    kind: valley
+    move: "F(-0.25,0.25)"
+    layers: paper
+    paper_rect: [0.5, 0.5, 1, 1]
+    title: Left petal
+    instruction: Fold the front left corner up to the top.
+    tips: ["Only the front flap moves."]
+    mistakes: ["Folding the back flap too."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["F(0.75,0.25)", "F(0.25,0.75)"]}
+    kind: valley
+    move: "F(0.75,0.25)"
+    layers: paper
+    paper_rect: [0, 0.5, 0.5, 1]
+    title: Right petal
+    instruction: Fold the front right corner up to the top.
+    tips: ["A diamond shape appears."]
+    mistakes: ["Missing the top point."]
+    symbol: repeat
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the model over.
+    tips: ["Repeat the same two folds here."]
+    mistakes: ["Rotating instead."]
+    symbol: turn-over
+  - op: fold
+    line: {point_to_point: ["F(-0.25,0.25)", "F(0.25,0.75)"]}
+    kind: valley
+    move: "F(-0.25,0.25)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 0.5]
+    title: Left petal
+    instruction: Fold this left corner up to the top.
+    tips: ["Same as the front."]
+    mistakes: ["Uneven petals."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["F(0.75,0.25)", "F(0.25,0.75)"]}
+    kind: valley
+    move: "F(0.75,0.25)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 0.5]
+    title: Right petal
+    instruction: Fold this right corner up to the top.
+    tips: ["Both sides are now diamonds."]
+    mistakes: ["Folding all layers at once."]
+    symbol: repeat
+  - op: shape
+    note: Overlap the side flaps and tuck one into the other's pocket, front and back.
+    title: Tuck the sides
+    instruction: Overlap the side flaps and tuck them in.
+    tips: ["Tuck one flap into the pocket of the other."]
+    mistakes: ["Tearing the pocket."]
+    symbol: squash
+  - op: shape
+    note: Blow into the hole at the bottom and peel the petals open.
+    title: Inflate
+    instruction: Blow into the bottom hole; peel the petals.
+    tips: ["A quick sharp puff works best."]
+    mistakes: ["Squeezing the blossom while blowing."]
+    symbol: inflate
+    check: A round blossom with four petals.

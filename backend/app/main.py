@@ -4,9 +4,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import db
+from . import db, studio
 from .fold_utils import normalize_fold
-from .models import PatternCreate, ProgressUpdate, UserCreate
+from .models import PatternCreate, ProgressUpdate, StudioCheck, StudioPreview, UserCreate
 from .seed import levels as level_defs
 
 
@@ -122,3 +122,15 @@ def get_pattern(pattern_id: int):
     if p is None:
         raise HTTPException(404, "pattern not found")
     return p
+
+
+# ---------------------------------------------------------------- studio
+
+@app.post("/api/studio/check")
+def post_studio_check(req: StudioCheck):
+    return studio.run_checks(req.fold.model_dump(), req.exceptions.model_dump())
+
+
+@app.post("/api/studio/preview")
+def post_studio_preview(req: StudioPreview):
+    return studio.preview(req.fold.model_dump())

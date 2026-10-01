@@ -1,0 +1,82 @@
+id: cat-face
+title: Cat Face
+category: masks
+level: 2
+minutes: 5
+paper: {width: 1, height: 1, start: white_up}
+tags: [face, simple]
+description: A cat face with pointed ears.
+steps:
+  - op: fold
+    line: {through: ["P(0,0)", "P(1,1)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Make a triangle
+    instruction: Fold the square in half diagonally.
+    tips: ["Colour ends up outside."]
+    mistakes: ["Corners not meeting."]
+    symbol: valley
+  - op: rotate
+    deg: -45
+    title: Long edge up
+    instruction: Rotate so the long edge is at the top.
+    tips: ["The bottom point becomes the chin."]
+    mistakes: ["Turning it over."]
+    symbol: rotate
+  - op: fold
+    line: {through: ["P(0.5,0)", "P(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Left corner down
+    instruction: Fold the left corner down to the bottom point.
+    tips: ["Edges line up along the side."]
+    mistakes: ["Missing the bottom point."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(1,0.5)", "P(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,1)"
+    title: Right corner down
+    instruction: Fold the right corner down the same way.
+    tips: ["Now it is a square diamond."]
+    mistakes: ["Uneven corners."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["F(0.5,-0.2071)", "F(0.22,0.6)"]}
+    kind: valley
+    move: "F(0.5,-0.2)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 0.5]
+    title: Left ear
+    instruction: Fold the left flap tip up and out.
+    tips: ["The tip pokes above the head."]
+    mistakes: ["Folding it straight up."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["F(0.5,-0.2071)", "F(0.78,0.6)"]}
+    kind: valley
+    move: "F(0.5,-0.2)"
+    layers: paper
+    paper_rect: [0.5, 0.5, 1, 1]
+    title: Right ear
+    instruction: Fold the right flap tip up the same way.
+    tips: ["Match the left ear."]
+    mistakes: ["Ears at different angles."]
+    symbol: repeat
+  - op: fold
+    line: {horizontal: "F(0.5,-0.06)"}
+    kind: mountain
+    move: "F(0.5,-0.2)"
+    title: Chin
+    instruction: Fold the bottom point behind.
+    tips: ["A flat chin looks more like a cat."]
+    mistakes: ["Folding it to the front."]
+    symbol: mountain
+  - op: shape
+    note: Draw eyes, nose and whiskers.
+    title: Draw the face
+    instruction: Draw eyes, a nose and whiskers.
+    tips: ["Eyes halfway between ears and chin."]
+    mistakes: ["Drawing on the back."]
+    symbol: inflate
+    check: A cat face with pointed ears.

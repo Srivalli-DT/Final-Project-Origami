@@ -1,0 +1,106 @@
+id: masu-box
+title: Masu Box
+category: boxes
+level: 3
+minutes: 12
+paper: {width: 1, height: 1, start: colour_up}
+tags: [traditional, box, blintz, 3d]
+description: The traditional square box. Its last steps are 3D.
+steps:
+  - op: crease
+    lines:
+      - line: {through: ["P(0,0)", "P(1,1)"]}
+        kind: valley
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: valley
+    title: Diagonals
+    instruction: Crease both diagonals.
+    tips: ["They mark the centre."]
+    mistakes: ["Creases missing the centre."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the paper over, white side up.
+    tips: ["The colour ends up outside the box."]
+    mistakes: ["Blintzing on the coloured side."]
+    symbol: turn-over
+  - op: fold
+    line: {point_to_point: ["P(0,0)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Blintz
+    instruction: Fold a corner to the centre.
+    tips: ["The point lands exactly where the diagonals cross."]
+    mistakes: ["Overshooting the centre."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["P(1,0)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,0)"
+    title: Blintz
+    instruction: Fold the next corner to the centre.
+    tips: ["Edges meet without overlapping."]
+    mistakes: ["Gaps between the flaps."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(1,1)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,1)"
+    title: Blintz
+    instruction: Fold the third corner to the centre.
+    tips: ["Keep the square shape."]
+    mistakes: ["Twisted corners."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(0,1)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Blintz
+    instruction: Fold the last corner to the centre.
+    tips: ["A smaller square, turned 45°."]
+    mistakes: ["One flap on top of another."]
+    symbol: repeat
+  - op: rotate
+    deg: 45
+    title: Square on
+    instruction: Rotate so the edges are level.
+    tips: ["Flap edges now run corner to corner."]
+    mistakes: ["Turning it over."]
+    symbol: rotate
+  - op: crease
+    lines:
+      - line: {horizontal: "B(0.5,0.25)"}
+        kind: valley
+      - line: {horizontal: "B(0.5,0.75)"}
+        kind: valley
+    title: Top and bottom
+    instruction: Fold top and bottom edges to the centre, unfold.
+    tips: ["Crease through all layers."]
+    mistakes: ["Creasing only the top layer."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {vertical: "B(0.25,0.5)"}
+        kind: valley
+      - line: {vertical: "B(0.75,0.5)"}
+        kind: valley
+    title: Left and right
+    instruction: Fold side edges to the centre, unfold.
+    tips: ["A grid of nine squares appears."]
+    mistakes: ["Creases off the quarter lines."]
+    symbol: fold-unfold
+  - op: shape
+    note: Open two opposite flaps and raise the remaining sides as walls.
+    title: Raise walls
+    instruction: Open two flaps; raise the other sides as walls.
+    tips: ["Pinch the corners so the walls stand straight."]
+    mistakes: ["Opening adjacent flaps."]
+    symbol: inflate
+  - op: shape
+    note: Fold the open ends up and over the walls, locking the points at the bottom.
+    title: Lock the ends
+    instruction: Fold the ends over the walls into the box.
+    tips: ["The points meet in the centre of the floor."]
+    mistakes: ["Crushing the corners."]
+    symbol: squash
+    check: A square box with stiff walls.

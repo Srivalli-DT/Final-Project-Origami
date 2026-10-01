@@ -1,0 +1,123 @@
+id: fortune-teller
+title: Fortune Teller
+category: action
+level: 2
+minutes: 8
+paper: {width: 1, height: 1, start: colour_up}
+tags: [traditional, blintz, game]
+description: The classic finger game with four movable points.
+steps:
+  - op: crease
+    lines:
+      - line: {through: ["P(0,0)", "P(1,1)"]}
+        kind: valley
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: valley
+    title: Diagonals
+    instruction: Crease both diagonals.
+    tips: ["They meet at the centre."]
+    mistakes: ["Off-centre creases."]
+    symbol: fold-unfold
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the paper over.
+    tips: ["Blintz on the white side."]
+    mistakes: ["Folding on the coloured side."]
+    symbol: turn-over
+  - op: fold
+    line: {point_to_point: ["P(0,0)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,0)"
+    title: Corner in
+    instruction: Fold a corner to the centre.
+    tips: ["Point exactly on the centre."]
+    mistakes: ["Overshooting."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["P(1,0)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,0)"
+    title: Corner in
+    instruction: Fold the next corner to the centre.
+    tips: ["Same as the first."]
+    mistakes: ["Gaps between flaps."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(1,1)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,1)"
+    title: Corner in
+    instruction: Fold the third corner to the centre.
+    tips: ["Keep edges crisp."]
+    mistakes: ["Twisted flap."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(0,1)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,1)"
+    title: Corner in
+    instruction: Fold the last corner to the centre.
+    tips: ["A smaller square."]
+    mistakes: ["Overlapping flaps."]
+    symbol: repeat
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the square over.
+    tips: ["The flaps are now underneath."]
+    mistakes: ["Letting the flaps open."]
+    symbol: turn-over
+  - op: fold
+    line: {point_to_point: ["P(0.5,0)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0.5,0)"
+    title: Corner in again
+    instruction: Fold a corner of the small square to the centre.
+    tips: ["The paper is thicker now; press firmly."]
+    mistakes: ["Missing the centre."]
+    symbol: valley
+  - op: fold
+    line: {point_to_point: ["P(1,0.5)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(1,0.5)"
+    title: Corner in again
+    instruction: Fold the next corner to the centre.
+    tips: ["Same as before."]
+    mistakes: ["Uneven flaps."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(0.5,1)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0.5,1)"
+    title: Corner in again
+    instruction: Fold the third corner to the centre.
+    tips: ["Keep it square."]
+    mistakes: ["Twisting the model."]
+    symbol: repeat
+  - op: fold
+    line: {point_to_point: ["P(0,0.5)", "F(0.5,0.5)"]}
+    kind: valley
+    move: "P(0,0.5)"
+    title: Corner in again
+    instruction: Fold the last corner to the centre.
+    tips: ["Four small triangles meet at the centre."]
+    mistakes: ["Gaps at the centre."]
+    symbol: repeat
+  - op: crease
+    lines:
+      - line: {horizontal: "F(0.5,0.5)"}
+        kind: valley
+      - line: {vertical: "F(0.5,0.5)"}
+        kind: valley
+    title: Crease in half
+    instruction: Fold in half both ways, then unfold.
+    tips: ["These creases let the points move."]
+    mistakes: ["Soft creases that will not flex."]
+    symbol: fold-unfold
+  - op: shape
+    note: Push the four corners together and slide fingers into the pockets underneath.
+    title: Fingers in
+    instruction: Push the corners together; fingers into the pockets.
+    tips: ["Number the flaps and write fortunes inside."]
+    mistakes: ["Pushing so hard the centre tears."]
+    symbol: inflate
+    check: Four points that open and close.

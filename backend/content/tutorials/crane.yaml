@@ -1,0 +1,204 @@
+id: crane
+title: Crane
+category: birds
+level: 3
+minutes: 20
+paper: {width: 1, height: 1, start: white_up}
+tags: [traditional, bird-base, petal-fold]
+description: The traditional crane, folded through the square base and the bird base.
+steps:
+  - op: crease
+    lines:
+      - line: {through: ["P(0,0)", "P(1,1)"]}
+        kind: valley
+      - line: {through: ["P(1,0)", "P(0,1)"]}
+        kind: valley
+    title: Diagonals
+    instruction: Crease both diagonals as valleys.
+    tips: ["Corner to corner, then unfold."]
+    mistakes: ["Creases that miss the centre."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - line: {horizontal: "P(0,0.5)"}
+        kind: mountain
+      - line: {vertical: "P(0.5,0)"}
+        kind: mountain
+    title: Book folds
+    instruction: Mountain-crease both book folds.
+    tips: ["Or turn over and valley-crease them."]
+    mistakes: ["Valley-creasing them by habit."]
+    symbol: fold-unfold
+  - op: collapse
+    flat: [[[0.5, 0.5], [0, 0]], [[0.5, 0.5], [1, 1]]]
+    title: Square base
+    instruction: Collapse into a square base, open end down.
+    tips: ["All four corners meet at the bottom."]
+    mistakes: ["Collapsing into a triangle instead."]
+    symbol: squash
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(0,0.5)"], ["P(0,0)", "P(0.5,0.5)"]]}
+    kind: valley
+    move: "P(0,0.3)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 0.5]
+    title: Left edge in
+    instruction: Fold the front left edge to the centre line.
+    tips: ["Only the top layer folds."]
+    mistakes: ["Folding all the layers at once."]
+    symbol: valley
+  - op: fold
+    line: {line_to_line: [["P(0,0)", "P(0.5,0)"], ["P(0,0)", "P(0.5,0.5)"]]}
+    kind: valley
+    move: "P(0.3,0)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 0.5]
+    title: Right edge in
+    instruction: Fold the front right edge to the centre line.
+    tips: ["The two edges meet on the centre line, like a kite."]
+    mistakes: ["Overlapping the edges."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.5,t22/2)", "P(t22/2,0.5)"]}
+    kind: valley
+    move: "P(0,0)"
+    layers: paper
+    paper_rect: [0, 0, 0.5, 0.5]
+    title: Petal fold
+    instruction: Lift the front point up; the sides fold in.
+    tips: ["Crease the top line first, then lift along it."]
+    mistakes: ["Letting the side flaps pop out."]
+    symbol: petal
+  - op: turn_over
+    title: Turn over
+    instruction: Turn the model over.
+    tips: ["The back is still a plain square base."]
+    mistakes: ["Turning it upside down instead."]
+    symbol: turn-over
+  - op: fold
+    line: {line_to_line: [["P(1,1)", "P(1,0.5)"], ["P(1,1)", "P(0.5,0.5)"]]}
+    kind: valley
+    move: "P(1,0.7)"
+    layers: paper
+    paper_rect: [0.5, 0.5, 1, 1]
+    title: Edge in again
+    instruction: Fold this side's lower edge to the centre.
+    tips: ["Same as the front."]
+    mistakes: ["Folding the petal you already made."]
+    symbol: repeat
+  - op: fold
+    line: {line_to_line: [["P(1,1)", "P(0.5,1)"], ["P(1,1)", "P(0.5,0.5)"]]}
+    kind: valley
+    move: "P(0.7,1)"
+    layers: paper
+    paper_rect: [0.5, 0.5, 1, 1]
+    title: Other edge in
+    instruction: Fold the other lower edge to the centre.
+    tips: ["A kite shape again."]
+    mistakes: ["Uneven kite folds."]
+    symbol: repeat
+  - op: fold
+    line: {through: ["P(0.5,1-t22/2)", "P(1-t22/2,0.5)"]}
+    kind: valley
+    move: "P(1,1)"
+    layers: paper
+    paper_rect: [0.5, 0.5, 1, 1]
+    title: Second petal
+    instruction: Petal-fold this side up too.
+    tips: ["Now you have the bird base."]
+    mistakes: ["Squashing instead of lifting."]
+    symbol: petal
+    check: A long diamond with two legs at the bottom.
+  - op: fold
+    line: {through: ["P(1,0)", "P(0.5,t22/2)"]}
+    kind: valley
+    move: "P(0.6,0.05)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 0.21]
+    title: Narrow leg
+    instruction: Narrow the inner leg along its kite crease.
+    tips: ["This happens as the petals rise; tidy it here."]
+    mistakes: ["Leaving the leg wide."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(1,0)", "P(1-t22/2,0.5)"]}
+    kind: valley
+    move: "P(0.95,0.4)"
+    layers: paper
+    paper_rect: [0.79, 0, 1, 0.5]
+    title: Narrow leg
+    instruction: Narrow the other side of that leg.
+    tips: ["The leg becomes a thin point."]
+    mistakes: ["Folding the wing by mistake."]
+    symbol: repeat
+  - op: fold
+    line: {through: ["P(0,1)", "P(t22/2,0.5)"]}
+    kind: valley
+    move: "P(0.05,0.6)"
+    layers: paper
+    paper_rect: [0, 0.5, 0.21, 1]
+    title: Second leg
+    instruction: Narrow the second leg the same way.
+    tips: ["Match the first leg."]
+    mistakes: ["Uneven legs."]
+    symbol: repeat
+  - op: fold
+    line: {through: ["P(0,1)", "P(0.5,1-t22/2)"]}
+    kind: valley
+    move: "P(0.4,0.95)"
+    layers: paper
+    paper_rect: [0, 0.79, 0.5, 1]
+    title: Second leg
+    instruction: Narrow its other side too.
+    tips: ["Both legs now thin points."]
+    mistakes: ["Tearing the centre."]
+    symbol: repeat
+    check: The bird base with two thin legs.
+  - op: rotate
+    deg: -45
+    title: Point up
+    instruction: Rotate so the petals point up.
+    tips: ["The two thin legs now point down."]
+    mistakes: ["Turning the model over."]
+    symbol: rotate
+  - op: fold
+    line: {point_to_point: ["F(0.35355,-0.14645)", "F(0.156,0.593)"]}
+    kind: valley
+    move: "F(0.35355,-0.14645)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 0.5]
+    title: Neck
+    instruction: Inside-reverse fold one leg up for the neck.
+    tips: ["Open the layers slightly and push the leg up between them."]
+    mistakes: ["Folding the leg outside the body."]
+    symbol: reverse
+  - op: fold
+    line: {point_to_point: ["F(0.35355,-0.14645)", "F(0.552,0.593)"]}
+    kind: valley
+    move: "F(0.35355,-0.14645)"
+    layers: paper
+    paper_rect: [0, 0.5, 0.5, 1]
+    title: Tail
+    instruction: Reverse fold the other leg up for the tail.
+    tips: ["Match the neck angle."]
+    mistakes: ["A tail at a different angle from the neck."]
+    symbol: reverse
+  - op: fold
+    line: {point_to_point: ["F(0.156,0.593)", "F(0.118,0.508)"]}
+    kind: valley
+    move: "F(0.156,0.593)"
+    layers: paper
+    paper_rect: [0.5, 0, 1, 0.5]
+    title: Head
+    instruction: Reverse fold the tip of the neck down.
+    tips: ["A small head looks more natural."]
+    mistakes: ["A head as long as the neck."]
+    symbol: reverse
+  - op: shape
+    note: Fold the wings down and gently pull them apart to shape the body.
+    title: Wings
+    instruction: Fold the wings down and spread them.
+    tips: ["Blow gently into the hole underneath to puff the body."]
+    mistakes: ["Pulling the wings too hard at the centre."]
+    symbol: inflate
+    check: A crane with neck, tail and wings.

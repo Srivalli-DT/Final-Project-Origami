@@ -1,0 +1,87 @@
+id: sonobe-unit
+title: Sonobe Unit
+category: modular
+level: 4
+minutes: 6
+paper: {width: 1, height: 1, start: white_up}
+tags: [modular, sonobe, assembly]
+description: The classic unit by Mitsunobu Sonobe. Three make a pyramid, six a cube.
+steps:
+  - op: crease
+    line: {horizontal: "P(0,0.5)"}
+    kind: valley
+    title: Centre crease
+    instruction: Fold in half, then unfold.
+    tips: ["A guide for the next two folds."]
+    mistakes: ["Folding along the other axis."]
+    symbol: fold-unfold
+  - op: fold
+    line: {horizontal: "P(0,0.25)"}
+    kind: valley
+    move: "P(0.5,0)"
+    title: Bottom to centre
+    instruction: Fold the bottom edge to the centre crease.
+    tips: ["Edge exactly on the crease."]
+    mistakes: ["Overlapping the centre."]
+    symbol: valley
+  - op: fold
+    line: {horizontal: "P(0,0.75)"}
+    kind: valley
+    move: "P(0.5,1)"
+    title: Top to centre
+    instruction: Fold the top edge to the centre crease.
+    tips: ["The edges meet without a gap."]
+    mistakes: ["A gap in the middle."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.25,0.25)", "P(0,0.5)"]}
+    kind: valley
+    move: "F(0.02,0.27)"
+    title: Corner up
+    instruction: Fold the bottom-left corner up to the centre.
+    tips: ["Its edge lies along the centre line."]
+    mistakes: ["Folding the top-left corner."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.75,0.75)", "P(1,0.5)"]}
+    kind: valley
+    move: "F(0.98,0.73)"
+    title: Corner down
+    instruction: Fold the top-right corner down to the centre.
+    tips: ["Opposite corners, so the unit is a parallelogram."]
+    mistakes: ["Folding the bottom-right corner."]
+    symbol: repeat
+  - op: fold
+    line: {through: ["P(0.75,0.25)", "P(1,0.5)"]}
+    kind: valley
+    move: "F(0.98,0.27)"
+    title: Tab
+    instruction: Fold the bottom-right point up to the top edge.
+    tips: ["This becomes a tab."]
+    mistakes: ["Tucking it under the flap."]
+    symbol: valley
+  - op: fold
+    line: {through: ["P(0.25,0.75)", "P(0,0.5)"]}
+    kind: valley
+    move: "F(0.02,0.73)"
+    title: Tab
+    instruction: Fold the top-left point down to the bottom edge.
+    tips: ["A square appears in the middle."]
+    mistakes: ["Uneven tabs."]
+    symbol: repeat
+  - op: unfold
+    to_step: 4
+    title: Open the tabs
+    instruction: Unfold the two tabs again.
+    tips: ["Leave sharp creases; they guide the assembly."]
+    mistakes: ["Unfolding the corners too."]
+    symbol: fold-unfold
+    check: A parallelogram with two tab creases.
+  - op: shape
+    note: Fold three units the same way. Slide the tab of each unit into the pocket of the next to make a pyramid; six units make a cube.
+    title: Assemble
+    instruction: Slide each tab into the next unit's pocket.
+    tips: ["Every unit must be folded the same way, not mirrored."]
+    mistakes: ["Mixing mirror-image units."]
+    symbol: repeat
+    check: Three units lock into a triangular pyramid.

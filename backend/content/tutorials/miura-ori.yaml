@@ -1,0 +1,72 @@
+id: miura-ori
+title: Miura-ori
+category: tessellations
+level: 5
+minutes: 25
+paper: {width: 1, height: 1, start: colour_up}
+tags: [tessellation, rigid-foldable, engineering]
+description: A 4×4 Miura-ori. Pull two corners and the whole sheet collapses at once.
+steps:
+  - op: crease
+    lines:
+      - {line: {horizontal: "P(0,0.25)"}, kind: valley}
+      - {line: {horizontal: "P(0,0.5)"}, kind: valley}
+      - {line: {horizontal: "P(0,0.75)"}, kind: valley}
+    title: Horizontal pleats
+    instruction: Crease the three horizontal quarter lines as valleys.
+    tips: ["These become the zig-zag rows."]
+    mistakes: ["Uneven spacing."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - {line: {through: ["P(0.25,0.0)", "P(0.31,0.25)"]}, kind: mountain, clip: ["P(0.25,0.0)", "P(0.31,0.25)"]}
+      - {line: {through: ["P(0.31,0.25)", "P(0.25,0.5)"]}, kind: mountain, clip: ["P(0.31,0.25)", "P(0.25,0.5)"]}
+      - {line: {through: ["P(0.25,0.5)", "P(0.31,0.75)"]}, kind: mountain, clip: ["P(0.25,0.5)", "P(0.31,0.75)"]}
+      - {line: {through: ["P(0.31,0.75)", "P(0.25,1.0)"]}, kind: mountain, clip: ["P(0.31,0.75)", "P(0.25,1.0)"]}
+    title: Zig-zag 1
+    instruction: Crease zig-zag column 1 as mountains.
+    tips: ["Each segment slants the other way from the last."]
+    mistakes: ["Straight creases instead of zig-zags."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - {line: {through: ["P(0.5,0.0)", "P(0.56,0.25)"]}, kind: valley, clip: ["P(0.5,0.0)", "P(0.56,0.25)"]}
+      - {line: {through: ["P(0.56,0.25)", "P(0.5,0.5)"]}, kind: valley, clip: ["P(0.56,0.25)", "P(0.5,0.5)"]}
+      - {line: {through: ["P(0.5,0.5)", "P(0.56,0.75)"]}, kind: valley, clip: ["P(0.5,0.5)", "P(0.56,0.75)"]}
+      - {line: {through: ["P(0.56,0.75)", "P(0.5,1.0)"]}, kind: valley, clip: ["P(0.56,0.75)", "P(0.5,1.0)"]}
+    title: Zig-zag 2
+    instruction: Crease zig-zag column 2 as valleys.
+    tips: ["Each segment slants the other way from the last."]
+    mistakes: ["Straight creases instead of zig-zags."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - {line: {through: ["P(0.75,0.0)", "P(0.81,0.25)"]}, kind: mountain, clip: ["P(0.75,0.0)", "P(0.81,0.25)"]}
+      - {line: {through: ["P(0.81,0.25)", "P(0.75,0.5)"]}, kind: mountain, clip: ["P(0.81,0.25)", "P(0.75,0.5)"]}
+      - {line: {through: ["P(0.75,0.5)", "P(0.81,0.75)"]}, kind: mountain, clip: ["P(0.75,0.5)", "P(0.81,0.75)"]}
+      - {line: {through: ["P(0.81,0.75)", "P(0.75,1.0)"]}, kind: mountain, clip: ["P(0.81,0.75)", "P(0.75,1.0)"]}
+    title: Zig-zag 3
+    instruction: Crease zig-zag column 3 as mountains.
+    tips: ["Each segment slants the other way from the last."]
+    mistakes: ["Straight creases instead of zig-zags."]
+    symbol: fold-unfold
+  - op: crease
+    lines:
+      - {line: {through: ["P(0.31,0.25)", "P(0.56,0.25)"]}, kind: mountain, clip: ["P(0.31,0.25)", "P(0.56,0.25)"]}
+      - {line: {through: ["P(0.81,0.25)", "P(1.0,0.25)"]}, kind: mountain, clip: ["P(0.81,0.25)", "P(1.0,0.25)"]}
+      - {line: {through: ["P(0.0,0.5)", "P(0.25,0.5)"]}, kind: mountain, clip: ["P(0.0,0.5)", "P(0.25,0.5)"]}
+      - {line: {through: ["P(0.5,0.5)", "P(0.75,0.5)"]}, kind: mountain, clip: ["P(0.5,0.5)", "P(0.75,0.5)"]}
+      - {line: {through: ["P(0.31,0.75)", "P(0.56,0.75)"]}, kind: mountain, clip: ["P(0.31,0.75)", "P(0.56,0.75)"]}
+      - {line: {through: ["P(0.81,0.75)", "P(1.0,0.75)"]}, kind: mountain, clip: ["P(0.81,0.75)", "P(1.0,0.75)"]}
+    title: Reverse segments
+    instruction: Re-crease alternate row segments as mountains.
+    tips: ["Each row alternates mountain, valley along its length."]
+    mistakes: ["Reversing a whole row."]
+    symbol: reverse
+  - op: collapse
+    title: Collapse
+    instruction: Push two opposite corners together.
+    tips: ["Rigid-foldable: all creases move at once."]
+    mistakes: ["Folding one row at a time."]
+    symbol: squash
+    check: A compact stack of parallelograms.

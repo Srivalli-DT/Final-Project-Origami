@@ -14,7 +14,7 @@ SNAP = 1e-3
 Point = tuple[float, float]
 Segment = tuple[Point, Point, str]
 
-_PRIORITY = {"M": 3, "V": 3, "F": 2, "B": 1}
+_PRIORITY = {"M": 3, "V": 3, "C": 3, "F": 2, "U": 2, "B": 1}
 _BOUNDARY: list[Segment] = [
     ((0.0, 0.0), (1.0, 0.0), "B"),
     ((1.0, 0.0), (1.0, 1.0), "B"),
@@ -361,7 +361,7 @@ def merge_collinear_lines(fold: dict, include=("M", "V", "F")) -> list[dict]:
 
 # ---------------------------------------------------------------- SVG
 
-COLOURS = {"M": "#e53935", "V": "#1e88e5", "F": "#9e9e9e", "B": "#000000"}
+COLOURS = {"M": "#e53935", "V": "#1e88e5", "F": "#9e9e9e", "B": "#000000", "C": "#22aa66", "U": "#9e9e9e"}
 
 
 def fold_to_svg(fold: dict, highlight_edges: Iterable[int] | None = None, size: int = 200) -> str:
@@ -374,7 +374,7 @@ def fold_to_svg(fold: dict, highlight_edges: Iterable[int] | None = None, size: 
         '<rect x="0" y="0" width="1" height="1" fill="#fffdf8"/>',
     ]
     order = sorted(range(len(fold["edges_vertices"])),
-                   key=lambda e: {"F": 0, "M": 1, "V": 1, "B": 2}[fold["edges_assignment"][e]])
+                   key=lambda e: {"F": 0, "U": 0, "M": 1, "V": 1, "C": 1, "B": 2}[fold["edges_assignment"][e]])
     for ei in order:
         a, b = fold["edges_vertices"][ei]
         asg = fold["edges_assignment"][ei]

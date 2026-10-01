@@ -1,0 +1,131 @@
+# Rules of flat folding and their exceptions. Rule ids that match a Studio check are "checkable".
+- id: maekawa
+  title: Maekawa
+  checkable: true
+  statement: At a flat vertex, mountains and valleys differ by exactly two.
+  why: Going round the vertex the paper turns 360°. Each valley adds +180°, each mountain −180°, so they must net to ±360°.
+  example: Four creases meet; three are valleys and one is a mountain.
+  details:
+    - Count only creases that are folded (M or V), not reference lines.
+    - It follows that the number of creases at a flat vertex is even.
+  demo_segments:
+    - [[0.5, 0.5], [1, 0.5], V]
+    - [[0.5, 0.5], [0, 0.5], V]
+    - [[0.5, 0.5], [0.5, 1], M]
+    - [[0.5, 0.5], [0.5, 0], V]
+  exceptions:
+    - {title: 3D shaping, text: Boxes and balloons end non-flat, so their vertices do not need to satisfy it.}
+    - {title: Wet-folding and curves, text: Curved creases bend the paper instead of folding it flat.}
+- id: kawasaki
+  title: Kawasaki
+  checkable: true
+  statement: Alternate angles around a flat vertex sum to 180°.
+  why: Walking round the vertex, each fold reflects the paper; after a full turn you must be back where you started.
+  example: Angles 90°, 135°, 90°, 45° work because 90 + 90 = 135 + 45 = 180.
+  details:
+    - Measure the sectors between consecutive creases around the vertex.
+    - Combined with Maekawa this is the local test for flat-foldability.
+  demo_segments:
+    - [[0.5, 0.5], [1, 0.5], M]
+    - [[0.5, 0.5], [0.5, 1], V]
+    - [[0.5, 0.5], [0, 0], V]
+    - [[0.5, 0.5], [1, 0], V]
+  exceptions:
+    - {title: Curved creases, text: Curved-crease models are not straight-line flat folds.}
+    - {title: 3D shaping, text: Non-flat final shapes do not need Kawasaki at every vertex.}
+- id: even-degree
+  title: Even degree
+  checkable: true
+  statement: Every interior vertex of a flat fold has an even number of creases.
+  why: Each crease flips the paper over; an odd number of flips cannot close up.
+  example: A vertex with three creases can never fold flat.
+  details:
+    - Boundary vertices on the paper edge are exempt.
+  demo_segments:
+    - [[0.5, 0.5], [1, 0.5], V]
+    - [[0.5, 0.5], [0, 0.5], V]
+    - [[0.5, 0.5], [0.5, 1], M]
+    - [[0.5, 0.5], [0.5, 0], V]
+  exceptions:
+    - {title: Kirigami, text: Cuts create new edges, so vertices on a cut count as boundary vertices.}
+- id: big-little-big
+  title: Big-little-big
+  checkable: true
+  statement: Creases on both sides of a strictly smallest angle have opposite types.
+  why: If both were valleys, the two big neighbouring sectors would collide when the small one folds.
+  example: A 45° sector between a 90° and a 90° sector needs one mountain and one valley.
+  details:
+    - Applies to each sector that is smaller than both its neighbours.
+  demo_segments:
+    - [[0.5, 0.5], [1, 0.5], M]
+    - [[0.5, 0.5], [0.5, 1], V]
+    - [[0.5, 0.5], [0, 0], V]
+    - [[0.5, 0.5], [1, 0], V]
+  exceptions:
+    - {title: 3D shaping, text: Models that end non-flat can break it.}
+- id: two-colourable
+  title: Two-colourable
+  checkable: true
+  statement: A flat-foldable pattern's faces can be coloured with two colours.
+  why: After folding, each face is either face-up or face-down; folds always switch between the two.
+  example: The square base alternates colours around the centre.
+  details:
+    - Equivalent to every interior vertex having even degree.
+  demo_segments:
+    - [[0, 0], [1, 1], V]
+    - [[1, 0], [0, 1], V]
+    - [[0, 0.5], [1, 0.5], M]
+    - [[0.5, 0], [0.5, 1], M]
+  exceptions:
+    - {title: Kirigami, text: Cuts can separate faces so the colouring no longer has to close up.}
+- id: no-self-intersection
+  title: No self-intersection
+  statement: Layers can never pass through each other.
+  why: Paper is solid. A valid fold needs a stacking order of all layers that never crosses.
+  example: Two flaps folded into the same pocket must nest, not cut through.
+  details:
+    - Finding a valid layer order for a whole pattern is NP-hard (Bern and Hayes, 1996).
+    - CreaseLens checks only local rules; the 3D preview may show layers crossing.
+  exceptions:
+    - {title: Tessellations, text: Twists can be flat-foldable but not rigid-foldable; panels must bend while folding.}
+- id: huzita-justin
+  title: Huzita–Justin axioms
+  statement: Seven ways to define a single fold from points and lines.
+  why: They describe every line you can find with one fold, so diagrams can be followed exactly.
+  example: "Axiom 2: fold so one point lands on another."
+  details:
+    - "1. Fold through two points."
+    - "2. Fold one point onto another."
+    - "3. Fold one line onto another."
+    - "4. Fold through a point, perpendicular to a line."
+    - "5. Fold through a point, placing another point onto a line."
+    - "6. Place two points onto two lines at once (solves cubics)."
+    - "7. Place a point onto a line, perpendicular to another line."
+  exceptions:
+    - {title: Rectangles, text: Planes and dollar-bill folds start from rectangles but use the same axioms.}
+- id: diagram-symbols
+  title: Diagram symbols
+  statement: Yoshizawa–Randlett symbols say which fold to make.
+  why: One shared notation lets anyone read diagrams in any language.
+  example: A dashed line is a valley; a dash-dot line is a mountain.
+  details:
+    - "Valley fold: dashed line, arrow with a solid head."
+    - "Mountain fold: dash-dot line, arrow with a hollow half-head."
+    - "Fold and unfold: arrow that returns."
+    - "Turn over: looping arrow."
+    - "Reverse, squash, petal and sink folds each have their own arrows."
+  exceptions:
+    - {title: Action models, text: Moving parts are shown with motion arrows that are not folds.}
+- id: paper-rules
+  title: Paper rules
+  statement: One square sheet, no cuts, no glue.
+  why: Pure origami makes everything from folding alone.
+  example: The crane uses one uncut square.
+  details:
+    - Many traditions relax these rules on purpose.
+  exceptions:
+    - {title: Kirigami, text: Allows cuts.}
+    - {title: Modular, text: Uses many sheets, sometimes glue.}
+    - {title: Rectangles, text: Planes and money folds start from rectangles.}
+    - {title: Wet-folding, text: Damp thick paper is shaped into curves.}
+    - {title: Action models, text: Models such as the flapping bird are designed to move.}
