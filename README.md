@@ -1,8 +1,9 @@
 # CreaseLens
 
-An origami learning platform with a real fold engine. Learn step by step in the **Folding School**,
-browse the **Library** of simulated tutorials, read the **Rules** of flat folding and their exceptions,
-and design your own crease patterns in the **Studio** with live rule checks and a physics preview.
+An origami learning platform with a real fold engine, in two parts: **Tutorials**, step-by-step lessons
+where every fold is simulated, and the **Studio**, where you design your own crease patterns with live
+rule checks and a physics preview. The rules of flat folding (and their exceptions) are explained from
+the Studio's rule panel.
 
 Live: https://final-project-origami.vercel.app
 
@@ -24,22 +25,22 @@ engine relies on.
 
 ## Features
 
-- **Folding School:** five levels from basic folds to collapsed tessellations. A level unlocks when 60%
-  of the previous one is done. XP: +10 per step, +50 per tutorial.
-- **Library:** 24 tutorials in 11 categories (foundations, bases, animals, birds, flowers, boxes, planes,
-  action, masks, modular, tessellations), filterable by category, level and search.
+- **Tutorials:** 24 tutorials in 11 categories (foundations, bases, animals, birds, flowers, boxes, planes,
+  action, masks, modular, tessellations), filterable by category, difficulty level (1–5) and search.
+  Finished tutorials get a tick (a guest id is created silently; there is no sign-up).
 - **Player (dual viewport):** the unfolded crease pattern so far (current crease animated, earlier ones
   dimmed) beside a 3D view of the folding paper. Hovering the current crease highlights its fold axis in
   3D and vice versa. Prev / play / next, step dots, fold-progress scrub, 0.5×/1×/2× speed, replay, tips and
   common mistakes behind one "i" toggle, ✓ Done, "Ask" and "I'm stuck" (Gemini with a template fallback),
   and "Open in Studio".
-- **Rules:** Maekawa, Kawasaki, even degree, big-little-big, two-colourability, no self-intersection,
+- **Rules (from the Studio):** Maekawa, Kawasaki, even degree, big-little-big, two-colourability, no self-intersection,
   Huzita–Justin axioms, diagram symbols and paper rules, each with exceptions (kirigami, modular,
   wet-folding/curved creases, 3D shaping, rectangles, tessellations, action models) and demo patterns that
   open in the Studio.
 - **Studio:** draw valley, mountain and reference lines on a 4/8/16/32 grid with snapping to grid points,
   crossings and 22.5° angles; axiom tools (point→point, line→line); select, erase, undo/redo; templates
-  (blank, kite, square base, waterbomb, Miura-ori); import/export `.fold` and `.svg`; save to My patterns.
+  (blank, kite, square base, waterbomb, Miura-ori); import/export `.fold` and `.svg`; save and reopen
+  "My patterns".
   A rules panel re-checks the pattern 300 ms after each edit (with exception toggles) and highlights failing
   vertices in both views.
 - **Physics preview:** our own bar-and-hinge solver with a fold % slider, a strain heatmap (viridis or
@@ -50,10 +51,9 @@ engine relies on.
 ```mermaid
 flowchart LR
   subgraph Browser["Frontend: React + Vite + three.js (Vercel static)"]
-    School --> Player
-    Library --> Player
-    Rules --> Studio
+    Tutorials --> Player
     Player -->|Open in Studio| Studio
+    Studio -->|rule info| Rules
     Studio --> Solver["sim/solver.ts<br/>bar-and-hinge"]
   end
   subgraph API["Backend: FastAPI (Vercel Python function)"]
@@ -63,8 +63,7 @@ flowchart LR
     Checks["studio.py<br/>rule checks"] --> FoldUtils["fold_utils · validate · guide"]
     Ask["ask.py"] -.optional.-> Gemini[(Gemini API)]
   end
-  Library -->|/api/tutorials| DB
-  School -->|/api/levels, /api/progress| DB
+  Tutorials -->|/api/tutorials, /api/progress| DB
   Studio -->|/api/studio/check, preview| Checks
   Player -->|/api/ask| Ask
 ```
@@ -168,7 +167,7 @@ Other commands:
   `backend/.renders/`.
 - `python -m scripts.export_mocks` refreshes `frontend/src/mock/` (offline data).
 
-Without `VITE_API_URL` the frontend runs on the bundled mocks: School, Library, Player and Rules work;
+Without `VITE_API_URL` the frontend runs on the bundled mocks: Tutorials, the player and Rules work;
 progress, Ask, Studio checks and saving need the backend.
 
 ### Environment variables
@@ -184,7 +183,7 @@ progress, Ask, Studio checks and saving need the backend.
 ## Deploy (free, Vercel)
 
 One Vercel project serves the static frontend and the FastAPI function (`api/index.py`). Pushing to `main`
-redeploys. For users, progress and saved patterns to persist, add a Neon Postgres database under
+redeploys. For progress ticks and saved patterns to persist, add a Neon Postgres database under
 **Storage** (it sets `DATABASE_URL`) and redeploy. Optionally set `GEMINI_API_KEY` for AI answers.
 
 ## References

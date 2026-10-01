@@ -34,7 +34,7 @@ import { IconButton } from "../components/Tip";
 import { FOLD_SECONDS, prepareCollapse, stepBounds, stepPieces } from "../fold/animate";
 import { useKeys } from "../hooks/useKeys";
 import { useReducedMotion } from "../hooks/useReducedMotion";
-import { useStudioInbox, useToasts, useUser } from "../store";
+import { ensureUser, useStudioInbox, useToasts, useUser } from "../store";
 import type { Answer, Crease, Fold, Tutorial } from "../types";
 
 const SYMBOLS: Record<string, [LucideIcon, string]> = {
@@ -83,7 +83,7 @@ export default function Player() {
   const navigate = useNavigate();
   const reduced = useReducedMotion();
   const toast = useToasts((s) => s.push);
-  const { userId, setProgress, progress } = useUser();
+  const { setProgress, progress } = useUser();
   const sendToStudio = useStudioInbox((s) => s.send);
   const [tut, setTut] = useState<Tutorial | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -225,9 +225,8 @@ export default function Player() {
 
   const markDone = async () => {
     if (!tut || !step) return;
-    if (!userId || usingMocks) {
-      toast("Add your name to save progress.", "info");
-    } else {
+    const userId = usingMocks ? null : await ensureUser();
+    if (userId) {
       try {
         setProgress(await api.saveProgress(userId, tut.id, idx, idx === last));
       } catch {
@@ -259,8 +258,8 @@ export default function Player() {
     return (
       <div className="p-6">
         <p className="text-error">Could not load this tutorial: {error}</p>
-        <Link to="/library" className="chip mt-3">
-          Library
+        <Link to="/" className="chip mt-3">
+          Tutorials
         </Link>
       </div>
     );
@@ -274,7 +273,7 @@ export default function Player() {
     <div className="flex h-full flex-col">
       {/* header */}
       <div className="flex items-center gap-2 border-b border-line px-3 py-2">
-        <Link to="/library" className="icon-btn" aria-label="Back to library">
+        <Link to="/" className="icon-btn" aria-label="Back to tutorials">
           <ChevronLeft className="h-4 w-4" aria-hidden />
         </Link>
         <h1 className="truncate text-lg font-semibold">{tut.title}</h1>

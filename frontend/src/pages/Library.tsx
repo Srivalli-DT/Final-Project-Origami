@@ -37,7 +37,7 @@ export default function Library() {
   return (
     <div className="px-4 py-6">
       <div className="flex flex-wrap items-baseline gap-3">
-        <h1 className="text-2xl font-semibold">Library</h1>
+        <h1 className="text-2xl font-semibold">Tutorials</h1>
         {q && (
           <button type="button" className="chip" onClick={() => set("q", "")} aria-label={`Clear search ${q}`}>
             “{q}” ×

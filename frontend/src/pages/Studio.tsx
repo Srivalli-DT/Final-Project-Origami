@@ -4,6 +4,8 @@ import {
   Download,
   Eraser,
   FileDown,
+  FolderOpen,
+  Info,
   FileUp,
   Grid3x3,
   Minus,
@@ -22,7 +24,8 @@ import { useKeys } from "../hooks/useKeys";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import type { Ramp } from "../sim/solver";
 import { rampColor } from "../sim/solver";
-import { useStudioInbox, useToasts, useUser } from "../store";
+import { Link } from "react-router-dom";
+import { ensureUser, useStudioInbox, useToasts, useUser } from "../store";
 import {
   dist,
   foldToSegs,
@@ -38,7 +41,7 @@ import {
 } from "../studio/geometry";
 import { exportFold, exportSvg, readFoldFile } from "../studio/io";
 import { TEMPLATES } from "../studio/templates";
-import type { CheckResult, Exceptions, FaceTree, P2 } from "../types";
+import type { CheckResult, Exceptions, FaceTree, P2, PatternSummary } from "../types";
 
 type Tool = "select" | "V" | "M" | "F" | "eraser" | "axiom";
 type Axiom = "p2p" | "l2l";
@@ -77,6 +80,7 @@ function ToolIcon({ tool }: { tool: Tool }) {
 export default function Studio() {
   const toast = useToasts((s) => s.push);
   const userId = useUser((s) => s.userId);
+  const [patterns, setPatterns] = useState<PatternSummary[] | null>(null);
   const take = useStudioInbox((s) => s.take);
   const reduced = useReducedMotion();
 
@@ -285,11 +289,34 @@ export default function Studio() {
 
   const save = async () => {
     if (usingMocks) return toast("Saving needs the server.");
+    const uid = await ensureUser();
     try {
-      await api.savePattern(title.trim() || "Untitled", check?.fold ?? fold, userId);
+      await api.savePattern(title.trim() || "Untitled", check?.fold ?? fold, uid);
       toast("Saved to My patterns", "info");
+      setPatterns(null);
     } catch {
       toast("Could not save.");
+    }
+  };
+
+  const togglePatterns = async () => {
+    if (patterns) return setPatterns(null);
+    if (usingMocks || !userId) return setPatterns([]);
+    try {
+      setPatterns(await api.patterns(userId));
+    } catch {
+      toast("Could not load your patterns.");
+    }
+  };
+
+  const openPattern = async (id: number) => {
+    try {
+      const p = await api.pattern(id);
+      commit(foldToSegs(p.fold));
+      setTitle(p.title);
+      setPatterns(null);
+    } catch {
+      toast("Could not open that pattern.");
     }
   };
 
@@ -418,6 +445,29 @@ export default function Studio() {
           <IconButton label="Save to My patterns" onClick={save}>
             <Save className="h-4 w-4" aria-hidden />
           </IconButton>
+          <div className="relative">
+            <IconButton label="My patterns" pressed={!!patterns} onClick={togglePatterns}>
+              <FolderOpen className="h-4 w-4" aria-hidden />
+            </IconButton>
+            {patterns && (
+              <div role="dialog" aria-label="My patterns" className="panel absolute right-0 top-full z-50 mt-1 w-64 p-2 shadow-lg">
+                {patterns.length === 0 ? (
+                  <p className="p-2 text-sm text-muted">Nothing saved yet.</p>
+                ) : (
+                  <ul className="max-h-72 overflow-y-auto">
+                    {patterns.map((p) => (
+                      <li key={p.id}>
+                        <button type="button" onClick={() => openPattern(p.id)} className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm hover:bg-panel2">
+                          <span className="min-w-0 flex-1 truncate">{p.title}</span>
+                          <span className="mono text-xs text-muted">{new Date(p.created_at).toLocaleDateString()}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -549,12 +599,12 @@ export default function Studio() {
           {usingMocks && <p className="mt-2 text-sm text-muted">Checks need the server.</p>}
           <ul className="mt-2 space-y-1">
             {check?.checks.map((c) => (
-              <li key={c.rule_id}>
+              <li key={c.rule_id} className="relative">
                 <button
                   type="button"
                   aria-pressed={focusRule === c.rule_id}
                   onClick={() => setFocusRule(focusRule === c.rule_id ? null : c.rule_id)}
-                  className={`flex w-full items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-sm ${focusRule === c.rule_id ? "border-accent" : "border-line"} bg-panel2`}
+                  className={`flex w-full items-center gap-2 rounded-lg border py-1.5 pl-2 pr-9 text-left text-sm ${focusRule === c.rule_id ? "border-accent" : "border-line"} bg-panel2`}
                   title={c.message}
                 >
                   {c.skipped ? (
@@ -567,6 +617,13 @@ export default function Studio() {
                   <span className="flex-1">{RULE_TITLES[c.rule_id] ?? c.rule_id}</span>
                   {!c.ok && <span className="mono text-xs text-error">{c.vertices.length}</span>}
                 </button>
+                <Link
+                  to={`/rules/${c.rule_id}`}
+                  className="icon-btn absolute right-1 top-1/2 h-7 min-w-7 -translate-y-1/2 border-0 bg-transparent"
+                  aria-label={`About ${RULE_TITLES[c.rule_id] ?? c.rule_id}`}
+                >
+                  <Info className="h-3.5 w-3.5 text-muted" aria-hidden />
+                </Link>
               </li>
             ))}
           </ul>

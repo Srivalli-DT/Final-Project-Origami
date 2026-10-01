@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate, useSearchParams } from "react-router-dom";
-import { BookOpenCheck, GraduationCap, Keyboard, LibraryBig, PenTool, Search, Sparkles, User, X } from "lucide-react";
+import { Keyboard, LibraryBig, PenTool, Search, X } from "lucide-react";
 import { api, usingMocks } from "../api";
-import { useServer, useToasts, useUser, xpLevel } from "../store";
+import { useServer, useToasts, useUser } from "../store";
 import { useKeys } from "../hooks/useKeys";
 
 const NAV = [
-  { to: "/", label: "School", icon: GraduationCap, end: true },
-  { to: "/library", label: "Library", icon: LibraryBig },
-  { to: "/studio", label: "Studio", icon: PenTool },
-  { to: "/rules", label: "Rules", icon: BookOpenCheck },
-  { to: "/me", label: "Profile", icon: User },
+  { to: "/", label: "Tutorials", icon: LibraryBig, end: true },
+  { to: "/studio", label: "Studio", icon: PenTool, end: false },
 ];
 
 export const SHORTCUTS: [string, string][] = [
@@ -57,8 +54,6 @@ function TopBar({ onShortcuts }: { onShortcuts: () => void }) {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
-  const { progress, name } = useUser();
-  const xp = progress?.xp ?? 0;
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-line bg-panel px-3 sm:px-4">
       <form
@@ -66,7 +61,7 @@ function TopBar({ onShortcuts }: { onShortcuts: () => void }) {
         className="relative flex-1 sm:max-w-sm"
         onSubmit={(e) => {
           e.preventDefault();
-          navigate(`/library${q.trim() ? `?q=${encodeURIComponent(q.trim())}` : ""}`);
+          navigate(`/${q.trim() ? `?q=${encodeURIComponent(q.trim())}` : ""}`);
         }}
       >
         <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden />
@@ -79,21 +74,6 @@ function TopBar({ onShortcuts }: { onShortcuts: () => void }) {
         />
       </form>
       <div className="ml-auto flex items-center gap-2">
-        <span
-          className="mono inline-flex h-9 items-center gap-1.5 rounded-lg border border-line bg-panel2 px-2.5 text-sm"
-          title={name ? `${name}: level ${xpLevel(xp)}` : "Level"}
-          aria-label={`Level ${xpLevel(xp)}`}
-        >
-          <span className="text-muted">Lv</span>
-          <span className="text-accent">{xpLevel(xp)}</span>
-        </span>
-        <span
-          className="mono inline-flex h-9 items-center gap-1.5 rounded-lg border border-line bg-panel2 px-2.5 text-sm"
-          aria-label={`${xp} XP`}
-        >
-          <Sparkles className="h-4 w-4 text-accent" aria-hidden />
-          {xp}
-        </span>
         <button type="button" className="icon-btn hidden sm:inline-flex" aria-label="Keyboard shortcuts" onClick={onShortcuts}>
           <Keyboard className="h-4 w-4" aria-hidden />
         </button>
@@ -136,66 +116,6 @@ function ShortcutsOverlay({ onClose }: { onClose: () => void }) {
   );
 }
 
-function WelcomeDialog() {
-  const setUser = useUser((s) => s.setUser);
-  const toast = useToasts((s) => s.push);
-  const [name, setName] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-  if (dismissed) return null;
-  const submit = async () => {
-    const n = name.trim();
-    if (!n) return;
-    setBusy(true);
-    try {
-      const u = await api.createUser(n);
-      setUser(u.user_id, u.name);
-    } catch {
-      toast("Could not reach the server; progress will not be saved.");
-      setDismissed(true);
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4">
-      <form
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="welcome-title"
-        className="panel w-full max-w-sm p-5"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <h2 id="welcome-title" className="text-lg font-semibold">
-          Welcome
-        </h2>
-        <label htmlFor="welcome-name" className="mt-2 block text-sm text-muted">
-          Your name (for progress)
-        </label>
-        <input
-          id="welcome-name"
-          autoFocus
-          maxLength={40}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="mt-1 h-10 w-full rounded-lg border border-line bg-panel2 px-3 focus:border-accent"
-        />
-        <div className="mt-4 flex gap-2">
-          <button type="submit" className="btn-accent flex-1" disabled={!name.trim() || busy}>
-            Start
-          </button>
-          <button type="button" className="icon-btn px-3 text-sm" onClick={() => setDismissed(true)}>
-            Skip
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
 export default function Layout() {
   const status = useServer((s) => s.status);
   const toasts = useToasts((s) => s.toasts);
@@ -232,7 +152,6 @@ export default function Layout() {
         </main>
       </div>
       {shortcuts && <ShortcutsOverlay onClose={() => setShortcuts(false)} />}
-      {!userId && !usingMocks && <WelcomeDialog />}
       <div aria-live="assertive" className="fixed bottom-20 right-4 z-[95] flex flex-col gap-2 sm:bottom-4">
         {toasts.map((t) => (
           <button

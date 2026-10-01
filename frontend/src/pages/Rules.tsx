@@ -80,7 +80,7 @@ export function RuleDetail() {
     );
   return (
     <div className="mx-auto max-w-3xl px-4 py-6">
-      <Link to="/rules" className="icon-btn" aria-label="All rules">
+      <Link to="/studio" className="icon-btn" aria-label="Back to Studio">
         <ChevronLeft className="h-4 w-4" aria-hidden />
       </Link>
       <h1 className="mt-3 text-2xl font-semibold">{rule.title}</h1>

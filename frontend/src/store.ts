@@ -76,8 +76,23 @@ export const useUser = create<UserState>((set) => ({
   },
 }));
 
-/** Level number from XP: every 200 XP is one level (1-based). */
-export const xpLevel = (xp: number) => 1 + Math.floor(xp / 200);
+/**
+ * The current user id, creating an anonymous guest on first use (no sign-up screen).
+ * Returns null when the server is unreachable.
+ */
+export async function ensureUser(): Promise<string | null> {
+  const { userId, setUser } = useUser.getState();
+  if (userId) return userId;
+  const { api, usingMocks } = await import("./api");
+  if (usingMocks) return null;
+  try {
+    const u = await api.createUser("Guest");
+    setUser(u.user_id, u.name);
+    return u.user_id;
+  } catch {
+    return null;
+  }
+}
 
 // ------------------------------------------------------------------ studio hand-off
 
